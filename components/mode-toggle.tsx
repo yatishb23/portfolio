@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 export function ModeToggle() {
   return (
-    <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white">
+    <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white bg-neutral-800  rounded-3xl">
       <Moon className="h-5 w-5" />
       <span className="sr-only">Toggle theme</span>
     </Button>

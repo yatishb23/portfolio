@@ -6,6 +6,7 @@ import FloatingShapes from "@/components/FloatingShapes";
 import ProjectCard from "@/components/ProjectCard";
 import { Github, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
+import LeetCodeHeatmap from "@/components/Heatmap";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -21,60 +22,56 @@ const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
+
 export default function Home() {
   return (
-    <>
-      {/* <FloatingShapes /> */}
-      <main className="container pt-40 pb-20 bg-black">
-        <motion.main
-      initial="hidden"
-      animate="visible"
-      className="container pt-32 bg-black min-h-screen"
-    >
+    <div className="min-h-screen bg-black">
+      <main className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          className="pt-40 pb-20"
+        >
           <motion.section
             variants={containerVariants}
             className="max-w-3xl mx-auto text-center space-y-8"
           >
+            {/* Hero Section */}
             <motion.div variants={itemVariants}>
               <motion.h1
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 100 }}
-                className="text-5xl md:text-6xl font-bold tracking-tight text-zinc-100"
+                className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-zinc-100"
               >
                 Hey, I&apos;m{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-                  Your Name
+                  Yatish Badgujar
                 </span>
                 !
               </motion.h1>
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="relative overflow-hidden"
-            >
+            <motion.div variants={itemVariants} className="overflow-hidden">
               <motion.h2
                 initial={{ x: -100 }}
                 animate={{ x: 0 }}
-                className="text-4xl font-semibold text-zinc-500/30"
+                className="text-3xl sm:text-4xl font-semibold text-zinc-500/30"
               >
                 Welcome to my site
               </motion.h2>
             </motion.div>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
-            >
+            <motion.p variants={itemVariants} className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
               I&apos;m a senior frontend developer and blogger, aiming to leave
               a lasting impression and drive innovation in the ever-evolving
               world of software development.
             </motion.p>
 
+            {/* Social Links */}
             <motion.div
               variants={containerVariants}
-              className="flex items-center justify-center gap-6"
+              className="flex items-center justify-center gap-6 px-4"
             >
               {[
                 { icon: Instagram, href: "#" },
@@ -91,25 +88,24 @@ export default function Home() {
                     href={href}
                     className="text-zinc-400 hover:text-zinc-100 transition-colors"
                   >
-                    <Icon className="h-8 w-8" />
+                    <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
                   </Link>
                 </motion.div>
               ))}
             </motion.div>
           </motion.section>
-          </motion.main>
 
-        <section className="max-w-4xl mx-auto space-y-8">
-          <ProjectCard
-            icon="/placeholder.svg"
-            title="Project Name"
-            category="CATEGORY"
-            year="2024"
-            description="Project description goes here. Write about what you did and what technologies you used."
-            images={["/placeholder.svg", "/placeholder.svg"]}
-          />
-        </section>
+          {/* Heatmap Section */}
+          <motion.section
+            variants={containerVariants}
+            className="mt-20 w-full max-w-5xl mx-auto px-4"
+          >
+            <div className="w-full overflow-x-auto">
+              <LeetCodeHeatmap username="yatish_23" />
+            </div>
+          </motion.section>
+        </motion.div>
       </main>
-    </>
+    </div>
   );
 }

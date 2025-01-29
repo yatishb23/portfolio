@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 
 const Navbar = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-sm rounded-2xl border border-black/20 shadow-lg">
       <nav className="container flex items-center justify-evenly py-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
           <Avatar className="h-12 w-12 ">
