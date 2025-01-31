@@ -7,6 +7,7 @@ import ProjectCard from "@/components/ProjectCard";
 import { Github, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import LeetCodeHeatmap from "@/components/Heatmap";
+import UserProfile from "@/components/Profiles";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -95,7 +96,14 @@ export default function Home() {
             </motion.div>
           </motion.section>
 
-          {/* Heatmap Section */}
+          <motion.section
+            variants={containerVariants}
+            className="mt-20 w-full max-w-5xl mx-auto px-4"
+          >
+            <div className="w-full overflow-x-auto">
+              <UserProfile/>
+            </div>
+          </motion.section>
           <motion.section
             variants={containerVariants}
             className="mt-20 w-full max-w-5xl mx-auto px-4"
