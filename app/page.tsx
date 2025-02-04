@@ -1,43 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin } from "lucide-react";
-import FloatingShapes from "@/components/FloatingShapes";
-import ProjectCard from "@/components/ProjectCard";
 import { Github, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import LeetCodeHeatmap from "@/components/Heatmap";
-import UserProfile from "@/components/Profiles";
+import Profiles from "@/components/Profiles";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 120 },
+  },
 };
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen w-screen bg-gradient-to-br from-[#0A0A0F] to-[#12121A]">
       <main className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate="visible"
-          className="pt-40 pb-20"
+          className="pt-32 pb-20 space-y-24"
         >
           <motion.section
             variants={containerVariants}
             className="max-w-3xl mx-auto text-center space-y-8"
           >
-            {/* Hero Section */}
             <motion.div variants={itemVariants}>
               <motion.h1
                 initial={{ scale: 0.95 }}
@@ -69,7 +70,6 @@ export default function Home() {
               world of software development.
             </motion.p>
 
-            {/* Social Links */}
             <motion.div
               variants={containerVariants}
               className="flex items-center justify-center gap-6 px-4"
@@ -98,22 +98,34 @@ export default function Home() {
 
           <motion.section
             variants={containerVariants}
-            className="mt-20 w-full max-w-5xl mx-auto px-4"
+            className="w-full max-w-6xl mx-auto"
           >
-            <div className="w-full overflow-x-auto">
-              <UserProfile/>
-            </div>
+            <motion.div 
+              variants={itemVariants}
+              className="p-1 rounded-3xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 backdrop-blur-xl"
+            >
+              <Profiles/>
+            </motion.div>
           </motion.section>
+
           <motion.section
             variants={containerVariants}
-            className="mt-20 w-full max-w-5xl mx-auto px-4"
+            className="w-full max-w-6xl mx-auto"
           >
-            <div className="w-full overflow-x-auto">
+            <motion.div 
+              variants={itemVariants}
+              className="p-6 rounded-3xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 backdrop-blur-xl overflow-x-auto"
+            >
               <LeetCodeHeatmap username="yatish_23" />
-            </div>
+            </motion.div>
           </motion.section>
         </motion.div>
       </main>
+
+      <div className="fixed inset-0 -z-10 opacity-20">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent" />
+      </div>
     </div>
   );
 }
