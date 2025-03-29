@@ -5,6 +5,7 @@ import { Github, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import LeetCodeHeatmap from "@/components/Heatmap";
 import Profiles from "@/components/Profiles";
+import { useTheme } from "@/components/theme";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,13 +28,19 @@ const itemVariants = {
 };
 
 export default function Home() {
+  const { theme } = useTheme();
+
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br from-[#0A0A0F] to-[#12121A]">
-      <main className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen w-screen bg-gradient-to-br ${
+      theme === 'dark' 
+        ? 'from-[#0A0A0F] to-[#12121A]' 
+        : 'from-zinc-50 to-zinc-100'
+    }`}>
+      <main className="relative min-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate="visible"
-          className="pt-32 pb-20 space-y-24"
+          className=" pt-48 pb-20 space-y-24"
         >
           <motion.section
             variants={containerVariants}
@@ -44,7 +51,9 @@ export default function Home() {
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 100 }}
-                className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-zinc-100"
+                className={`text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight ${
+                  theme === 'dark' ? 'text-zinc-100' : 'text-zinc-900'
+                }`}
               >
                 Hey, I&apos;m{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
@@ -58,13 +67,20 @@ export default function Home() {
               <motion.h2
                 initial={{ x: -100 }}
                 animate={{ x: 0 }}
-                className="text-3xl sm:text-4xl font-semibold text-zinc-500/30"
+                className={`text-3xl sm:text-4xl font-semibold ${
+                  theme === 'dark' ? 'text-zinc-500/30' : 'text-zinc-400/50'
+                }`}
               >
                 Welcome to my site
               </motion.h2>
             </motion.div>
 
-            <motion.p variants={itemVariants} className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
+            <motion.p 
+              variants={itemVariants} 
+              className={`text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed px-4 ${
+                theme === 'dark' ? 'text-zinc-400' : 'text-zinc-600'
+              }`}
+            >
               I&apos;m a senior frontend developer and blogger, aiming to leave
               a lasting impression and drive innovation in the ever-evolving
               world of software development.
@@ -87,7 +103,11 @@ export default function Home() {
                 >
                   <Link
                     href={href}
-                    className="text-zinc-400 hover:text-zinc-100 transition-colors"
+                    className={`transition-colors ${
+                      theme === 'dark' 
+                        ? 'text-zinc-400 hover:text-zinc-100' 
+                        : 'text-zinc-500 hover:text-zinc-900'
+                    }`}
                   >
                     <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
                   </Link>
@@ -102,7 +122,11 @@ export default function Home() {
           >
             <motion.div 
               variants={itemVariants}
-              className="p-1 rounded-3xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 backdrop-blur-xl"
+              className={`w-full rounded-3xl backdrop-blur-xl ${
+                theme === 'dark' 
+                  ? 'bg-white/5 border border-white/10' 
+                  : 'bg-black/5 border border-zinc-300'
+              }`}
             >
               <Profiles/>
             </motion.div>
@@ -114,7 +138,11 @@ export default function Home() {
           >
             <motion.div 
               variants={itemVariants}
-              className="p-6 rounded-3xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 backdrop-blur-xl overflow-x-auto"
+              className={`p-6 rounded-3xl backdrop-blur-xl overflow-x-auto ${
+                theme === 'dark'
+                  ? 'bg-gradient-to-br from-white/5 to-transparent border border-white/10'
+                  : 'bg-gradient-to-br from-zinc-100/50 to-transparent border border-zinc-300'
+              }`}
             >
               <LeetCodeHeatmap username="yatish_23" />
             </motion.div>
@@ -123,8 +151,16 @@ export default function Home() {
       </main>
 
       <div className="fixed inset-0 -z-10 opacity-20">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent" />
+        <div className={`absolute inset-0 ${
+          theme === 'dark' 
+            ? 'bg-[url(/grid-dark.svg)]' 
+            : 'bg-[url(/grid-light.svg)]'
+        } bg-repeat`} />
+        <div className={`absolute inset-0 bg-gradient-to-b ${
+          theme === 'dark' 
+            ? 'from-cyan-500/5 to-transparent' 
+            : 'from-blue-500/5 to-transparent'
+        }`} />
       </div>
     </div>
   );

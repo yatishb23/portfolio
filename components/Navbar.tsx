@@ -6,15 +6,23 @@ import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
+import { useTheme } from "./theme";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme } = useTheme();
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
+  const bgColor = theme === "dark" ? "bg-black/10" : "bg-white/10";
+  const borderColor = theme === "dark" ? "border-black/20" : "border-gray-300";
+  const textColor = theme === "dark" ? "text-white" : "text-gray-900";
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-sm rounded-2xl border border-black/20 shadow-lg">
-      <nav className="flex justify-evenly gap-40 py-4">
-        {/* Logo (Avatar) always on the left */}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 ${bgColor} backdrop-blur-sm `}
+    >
+      <nav className="flex justify-evenly gap-40 py-8">
+        {/* Logo (Avatar) */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -22,26 +30,30 @@ const Navbar = () => {
         >
           <Avatar className="h-12 w-12">
             <AvatarImage
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ctyJt4duLXrICNtOm60e2PBPWgSTpd.png"
+              src="avatar.jpg"
               alt="Profile"
             />
             <AvatarFallback>YN</AvatarFallback>
           </Avatar>
         </motion.div>
 
-        {/* Desktop Navigation Links (visible on md and up) */}
+        {/* Desktop Navigation Links */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="hidden md:flex bg-zinc-900/90 rounded-full px-6 py-4"
+          className={`hidden md:flex ${
+            theme === "dark" ? "bg-zinc-900/90" : "bg-gray-100 border border-gray-300"
+          } rounded-full px-6 py-4`}
         >
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 ">
             {["About", "Blog", "Creating", "Contact"].map((item) => (
               <Link
                 key={item}
                 href={`/${item.toLowerCase()}`}
-                className="text-semi-lg text-white font-semibold hover:text-white transition-colors"
+                className={`text-semi-lg font-semibold ${textColor} hover:${
+                  theme === "dark" ? "text-white" : "text-gray-900"
+                } transition-colors`}
               >
                 {item}
               </Link>
@@ -49,34 +61,27 @@ const Navbar = () => {
           </div>
         </motion.div>
 
-        {/* Right Side: Mobile Menu Icon (only on small devices) and Theme Toggle */}
+        {/* Right Side Controls */}
         <div className="flex items-center space-x-4">
-          {/* Hamburger Icon for mobile devices */}
+          {/* Mobile Menu Toggle */}
           <div className="md:hidden">
             <motion.button
               onClick={toggleMenu}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-white focus:outline-none"
+              className={`focus:outline-none ${textColor}`}
               aria-label="Toggle Menu"
             >
               {isMenuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
             </motion.button>
           </div>
 
-          {/* Theme Toggle (always visible) */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <ModeToggle />
-          </motion.div>
+          <ModeToggle />
         </div>
       </nav>
 
-      {/* Mobile Dropdown Menu (only rendered on small devices) */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -84,7 +89,11 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-zinc-900/90 rounded-b-2xl border-t border-black/20 shadow-lg overflow-hidden"
+            className={`md:hidden ${
+              theme === "dark" ? "bg-zinc-900/90" : "bg-gray-100"
+            } rounded-b-2xl border-t ${
+              theme === "dark" ? "border-black/20" : "border-gray-300"
+            } shadow-lg overflow-hidden`}
           >
             <div className="container flex flex-col items-center py-4">
               {["About", "Blog", "Creating", "Contact"].map((item) => (
@@ -92,7 +101,9 @@ const Navbar = () => {
                   key={item}
                   href={`/${item.toLowerCase()}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-semi-lg text-white font-semibold hover:text-white transition-colors py-2"
+                  className={`block text-semi-lg font-semibold ${textColor} hover:${
+                    theme === "dark" ? "text-white" : "text-gray-900"
+                  } transition-colors py-2`}
                 >
                   {item}
                 </Link>
