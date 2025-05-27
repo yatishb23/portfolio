@@ -2,33 +2,9 @@
 
 import { motion } from "framer-motion";
 import PlatformIcon from "./PlatformIcon";
-import { useTheme } from "./theme";
-import { useState } from "react";
-
-interface QuestionStatsProps {
-  platforms?: PlatformData[];
-}
-
-interface PlatformData {
-  platform: string;
-  totalQuestionStats?: {
-    totalQuestionCounts: number;
-    easyQuestionCounts?: number;
-    mediumQuestionCounts?: number;
-    hardQuestionCounts?: number;
-  };
-  userStats: {
-    currentRating: number;
-    maxRating: number;
-  };
-}
+import { QuestionStatsProps } from "@/type/platform";
 
 const QuestionStats: React.FC<QuestionStatsProps> = ({ platforms = [] }) => {
-  const { theme } = useTheme();
-  const [selectedPlatform, setSelectedPlatform] = useState<string>(
-    platforms[0]?.platform || ""
-  );
-
   const totalSolved = platforms.reduce(
     (sum, platform) =>
       sum + (platform.totalQuestionStats?.totalQuestionCounts || 0),
@@ -39,25 +15,13 @@ const QuestionStats: React.FC<QuestionStatsProps> = ({ platforms = [] }) => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`border rounded-2xl p-4 shadow-xl w-full transition-colors duration-300 ${
-        theme === "dark"
-          ? "bg-[#12121A] border-white/20 text-white"
-          : "bg-white border-gray-200 text-gray-900"
-      }`}
+      className="border rounded-2xl p-4 shadow-xl w-full transition-colors duration-300 bg-white border-gray-200 text-gray-900 dark:bg-[#12121A] dark:border-white/20 dark:text-white"
     >
       <div className="text-center mb-5">
-        <h3
-          className={`text-xs font-medium uppercase tracking-widest ${
-            theme === "dark" ? "text-gray-400" : "text-gray-600"
-          }`}
-        >
+        <h3 className="text-xs font-medium uppercase tracking-widest text-gray-600 dark:text-gray-400">
           Problems Solved
         </h3>
-        <p
-          className={`text-4xl font-bold mt-1 ${
-            theme === "dark" ? "text-[#22C55E]" : "text-emerald-600"
-          }`}
-        >
+        <p className="text-4xl font-bold mt-1 text-emerald-600 dark:text-[#22C55E]">
           {totalSolved}
         </p>
       </div>
@@ -67,54 +31,48 @@ const QuestionStats: React.FC<QuestionStatsProps> = ({ platforms = [] }) => {
           <motion.div
             key={platform.platform}
             className={`p-4 transition-all ${
-              theme === "dark" ? "border-gray-800" : "border-gray-200"
-            } ${index % 2 === 0 ? "md:border-r" : ""} ${
+              index % 2 === 0 ? "md:border-r" : ""
+            } ${
               index < platforms.length - (platforms.length % 2)
                 ? "border-b"
                 : ""
-            }`}
+            } border-gray-200 dark:border-gray-800`}
           >
-            {/* Platform Header */}
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-2">
                 <PlatformIcon platform={platform.platform} />
-                <h4
-                  className={`font-medium ${
-                    theme === "dark" ? "text-gray-100" : "text-gray-900"
-                  }`}
-                >
+                <h4 className="font-medium text-gray-900 dark:text-gray-100">
                   {platform.platform}
                 </h4>
               </div>
-              <span
-                className={`text-2xl font-bold ${
-                  theme === "dark" ? "text-[#22C55E]" : "text-emerald-600"
-                }`}
-              >
+              <span className="text-2xl font-bold text-emerald-600 dark:text-[#22C55E]">
                 {platform.totalQuestionStats?.totalQuestionCounts || 0}
               </span>
             </div>
 
-            {/* Difficulty List */}
             <div className="space-y-2">
-              {["easy", "medium", "hard"].map((difficulty) => (
-                <div key={difficulty} className="flex justify-between text-sm">
-                  <span
-                    className={
-                      theme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }
+              {(["easy", "medium", "hard"] as const).map((difficulty) => {
+                const counts = {
+                  easy: platform.totalQuestionStats?.easyQuestionCounts ?? 0,
+                  medium:
+                    platform.totalQuestionStats?.mediumQuestionCounts ?? 0,
+                  hard: platform.totalQuestionStats?.hardQuestionCounts ?? 0,
+                };
+
+                return (
+                  <div
+                    key={difficulty}
+                    className="flex justify-between text-sm"
                   >
-                    {difficulty}:
-                  </span>
-                  <span
-                    className={
-                      theme === "dark" ? "text-[#22C55E]" : "text-emerald-600"
-                    }
-                  >
-                    {platform.totalQuestionStats?.hardQuestionCounts || 0}
-                  </span>
-                </div>
-              ))}
+                    <span className="text-gray-600 dark:text-gray-400">
+                      {difficulty}:
+                    </span>
+                    <span className="text-emerald-600 dark:text-[#22C55E]">
+                      {counts[difficulty]}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         ))}

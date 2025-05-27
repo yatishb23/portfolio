@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function GET(res: Response) {
+export async function GET() {
   const response = await fetch("https://api.codolio.com/user", {
     method: "GET",
     headers: {
@@ -16,7 +16,7 @@ export async function GET(res: Response) {
       { error: data.errors[0].message },
       { status: 500 }
     );
-  }  
-  
+  }
+
   return NextResponse.json(data.data.platformProfiles);
 }

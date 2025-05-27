@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const LEETCODE_API_ENDPOINT = "https://leetcode.com/graphql";
 
@@ -22,7 +22,7 @@ query userProfileCalendar($username: String!, $year: Int) {
 }
 `;
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const username = searchParams.get("username");
   const year = searchParams.get("year");
@@ -31,7 +31,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Username is required" }, { status: 400 });
   }
 
-  // Default to current year if no year is provided
   const selectedYear = year ? parseInt(year) : new Date().getFullYear();
 
   const response = await fetch(LEETCODE_API_ENDPOINT, {
