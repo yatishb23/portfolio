@@ -59,36 +59,6 @@ export const projects: Project[] = [
       "MongoDB",
     ],
   },
-  {
-    id: 'learnx',
-    title: "LearnX",
-    smallDes: "Comprehensive Course Marketplace",
-    description: "LearnX is a comprehensive course marketplace platform that seamlessly connects educators with learners. Built on the MERN stack with TypeScript, it features secure user authentication, streamlined course management, and integrated payment processing through Razorpay. The platform emphasizes user experience with intuitive navigation, responsive design, and robust content delivery, making online education accessible and engaging.",
-    liveLink: "https://learnx-frontend.onrender.com/",
-    githubLink: "https://github.com/KartikLabhshetwar/LearnX",
-    image: '/images/learnx.png',
-    tweetUrl: "https://x.com/code_kartik/status/1832882108316176563",
-    tags: [
-      "MERN",
-      "Zod",
-      "JWT",
-      "TypeScript",
-      "bcryptjs",
-      "Tailwind CSS",
-      "Razorpay API"
-    ],
-  },
-  {
-    id: 'taskmaster',
-    title: "TaskMaster",
-    smallDes: "Dynamic Task Management Dashboard",
-    description: "TaskMaster redefines task management with its dynamic Kanban board implementation and detailed list views. This full-stack application combines the flexibility of Next.js with the reliability of MongoDB to deliver a seamless task organization experience. Features include real-time updates, drag-and-drop functionality, and customizable workflows, all wrapped in an elegant, responsive interface that prioritizes productivity and user experience.",
-    liveLink: "https://task-management-dashboard-zeta.vercel.app/",
-    githubLink: "https://github.com/KartikLabhshetwar/task-management-dashboard",
-    image:'/images/taskmaster.png',
-    // tweetUrl: "https://x.com/code_kartik/status/1887125453359788069",
-    tags: ["Next.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
-  },
 ];
 
 export const getProjectById = (id: string): Project | undefined => {

@@ -6,11 +6,16 @@ import { ModeToggle } from './theme-toggle'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen((prev) => !prev)
+  const router = useRouter()
 
+  const handleClick = () => {
+    router.push("/")
+  }
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/10 dark:bg-black/10 backdrop-blur-sm">
       <nav className="flex justify-evenly gap-40 py-4">
@@ -21,7 +26,7 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <Avatar className="h-12 w-12 border dark:border-none border-black">
-            <AvatarImage src="yatish2.png" alt="Profile" />
+            <AvatarImage src="yatish2.png" alt="Profile" onClick={handleClick}/>
             <AvatarFallback>YN</AvatarFallback>
           </Avatar>
         </motion.div>

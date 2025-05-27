@@ -113,7 +113,7 @@ export default function Home() {
                 </a>
 
                 <Link
-                  href={"https://cal.com/kartik-labhshetwar/15min"}
+                  href={"https://cal.com/yatish-badgujar/15min"}
                   target="_blank"
                   className={`pl-4 text-lg md:text-xl hover:underline dark:text-white ${clashDisplay.className}`}
                 >

@@ -6,7 +6,7 @@ import LeetCodeHeatmap from '@/components/Heatmap'
 
 export default function CodingProfiles() {
   return (
-    <div className="pt-10 min-h-screen bg-zinc-50 text-neutral-900 dark:bg-[#0A0A0F] dark:text-neutral-200">
+    <div className="pt-10 min-h-screen bg-gradient-to-br dark:from-[#0A0A0F] dark:to-[#12121A] dark:text-neutral-200 from-zinc-50 to-zinc-100">
       <div className="flex flex-col items-start px-6 md:px-12 lg:ml-100 pt-4 md:pt-6 space-y-8 md:space-y-12 max-w-3xl mx-auto">
         <div className="w-full flex justify-end items-center"></div>
 

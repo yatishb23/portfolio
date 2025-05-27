@@ -10,7 +10,7 @@ interface ProjectsListClientProps {
 
 export default function ProjectsListClient({ projects }: ProjectsListClientProps) {
   return (
-    <div className="min-h-screen pt-20 bg-white text-gray-900 dark:bg-[#121212] dark:text-gray-200">
+    <div className="min-h-screen pt-20 bg-gradient-to-br dark:from-[#0A0A0F] dark:to-[#12121A] dark:text-neutral-200 from-zinc-50 to-zinc-100">
       <div className="flex flex-col items-start px-6 md:px-12 lg:ml-100 pt-4 md:pt-6 space-y-8 md:space-y-12 max-w-3xl mx-auto">
         <div className="w-full">
           <div className="mb-10">
