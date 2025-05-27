@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 
 export const metadata = {
-  title: "Your Name - Portfolio",
+  title: "Yatish Badgujar",
   description: "Product Designer & Developer",
 };
 
