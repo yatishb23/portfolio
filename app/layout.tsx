@@ -1,7 +1,7 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { ThemeProvider } from "@/components/theme-provider";
-
+import Navbar from "@/components/Layouts/Navbar";
+import { Provider } from "@/components/theme/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata = {
   title: "Yatish Badgujar",
@@ -18,15 +18,12 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <head />
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <Provider>
+            <TooltipProvider>
             <Navbar/>
             {children}
-          </ThemeProvider>
+            </TooltipProvider>
+          </Provider>
         </body>
       </html>
     </>
