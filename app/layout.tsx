@@ -2,18 +2,19 @@ import "./globals.css";
 import Navbar from "@/components/Layouts/Navbar";
 import { Provider } from "@/components/theme/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import {Geist} from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 
 export const metadata = {
   title: "Yatish Badgujar",
   description: "Product Designer & Developer",
 };
 
-const geist = Geist({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-geist",
-})
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 
 export default function RootLayout({
@@ -23,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning className={`${geist.variable}`}>
+      <html lang="en" suppressHydrationWarning className={ibmPlexSans.variable}>
         <head />
         <body>
           <Provider>
