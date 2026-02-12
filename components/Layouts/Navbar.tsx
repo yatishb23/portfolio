@@ -13,36 +13,43 @@ export default function Navbar() {
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, 'change', (currentY) => {
-    if (scrolled) console.log('scrolled');
     setScrolled(currentY > 20);
   });
 
   return (
-    <motion.div
-      initial={{ y: 0 }}
+    <motion.aside
+      initial={{ x: 0 }}
       transition={{ duration: 0.4, ease: 'easeInOut' }}
-      className="fixed top-0 inset-x-0 z-50 pt-2.5 left-0 right-0 bg-white/10 dark:bg-black/10 backdrop-blur-sm"
+      className="fixed top-0 left-0 h-screen w-20 sm:w-36 z-50 flex flex-col items-center justify-center py-6 shadow-md"
     >
-      <motion.nav
-        transition={{ duration: 0.4, ease: 'easeInOut' }}
-        className="rounded-4xl hidden sm:flex mx-auto px-4 pt-2.3 sm:px-6 py-2 max-w-3xl items-center justify-between"
+      {/* Desktop Navbar */}
+      <div
+        className="hidden sm:flex flex-col items-center space-y-6 w-1/2 
+             pt-5 pb-5
+             rounded-xl border border-transparent
+             hover:border-stone-700 hover:bg-neutral-900
+             transition-all duration-300 ease-in-out"
       >
         <DesktopNav />
-        <div className="hidden sm:block">
-          <ModeToggle variant="polygon" start="center" />
-        </div>
-      </motion.nav>
+        <ModeToggle variant="polygon" start="center" />
+      </div>
 
-      <div className="sm:hidden relative w-full">
+
+
+      {/* Mobile Navbar Button */}
+      <div className="sm:hidden flex justify-center w-full">
         <button
-          className="absolute top-4 right-4 z-50 text-2xl text-neutral-900 dark:text-white"
+          className="text-3xl text-neutral-900 dark:text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <HiX /> : <HiMenu />}
         </button>
       </div>
 
-      {mobileMenuOpen && <MobileNav onClose={() => setMobileMenuOpen(false)} />}
-    </motion.div>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <MobileNav onClose={() => setMobileMenuOpen(false)} />
+      )}
+    </motion.aside>
   );
 }

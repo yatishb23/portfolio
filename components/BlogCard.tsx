@@ -8,7 +8,7 @@ interface BlogCardProps {
 
 export const BlogCard: FC<BlogCardProps> = ({ blog }) => {
   return (
-    <Link href={`/blogs/${blog.id}`}>
+    <Link href={`/blog/${blog.id}`}>
       <article className="border-b border-neutral-500 dark:border-neutral-800 pb-8 hover:bg-neutral-100 dark:hover:bg-neutral-900/50 transition-colors p-4 -mx-4 rounded-lg">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
           <h2 className="text-xl md:text-2xl font-medium">{blog.title}</h2>
