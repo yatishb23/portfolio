@@ -1,3 +1,5 @@
+import VisitorTracker from "@/components/VisitorTracker";
+
 export default function Footer() {
   return (
     <footer className="py-16 border-t border-neutral-200 dark:border-neutral-800">
@@ -10,6 +12,9 @@ export default function Footer() {
             </div>
             <div className="text-[10px] font-black uppercase tracking-widest text-neutral-300 dark:text-neutral-700">
               Engineered with Excellence
+            </div>
+            <div className="pt-2">
+              <VisitorTracker />
             </div>
           </div>
         </div>
