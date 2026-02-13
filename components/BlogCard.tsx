@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import Link from 'next/link'
 import { BlogPost } from '@/type/blog'
-import Image from 'next/image'
 
 interface BlogCardProps {
   blog: BlogPost
