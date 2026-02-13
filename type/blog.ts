@@ -7,4 +7,5 @@ export interface BlogPost {
     author: string
     tags: string[]
     readTime: string
+    coverImage?: string
   }

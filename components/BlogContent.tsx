@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { BlogPost } from '@/type/blog'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import Image from 'next/image'
 
 interface BlogContentProps {
   blog: BlogPost
@@ -16,6 +17,18 @@ export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
           {blog.title}
         </h1>
         
+        {blog.coverImage && (
+          <div className="relative aspect-[16/9] mb-12 rounded-[2.5rem] overflow-hidden border border-neutral-100 dark:border-neutral-800">
+            <Image 
+              src={blog.coverImage} 
+              alt={blog.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
+
         <div className="flex flex-wrap items-center gap-6 text-neutral-400 mb-8">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-black uppercase tracking-[0.2em]">Published</span>
@@ -45,12 +58,19 @@ export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
         </div>
       </header>
       
-      <div className="content prose-neutral dark:prose-invert prose-lg md:prose-xl prose-p:text-neutral-600 dark:prose-p:text-neutral-400 prose-p:leading-relaxed prose-headings:text-neutral-950 dark:prose-headings:text-neutral-50">
+      <div className="content prose-neutral dark:prose-invert prose-lg md:prose-xl prose-p:text-neutral-600 dark:prose-p:text-neutral-400 prose-p:leading-relaxed prose-headings:text-neutral-950 dark:prose-headings:text-neutral-50 font-sans">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
           components={{
-            p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
+            p: ({ children }) => {
+              if (React.Children.toArray(children).some(child => 
+                React.isValidElement(child) && (child.type === 'div' || (child.type as any).name === 'img')
+              )) {
+                return <>{children}</>
+              }
+              return <p className="mb-4 leading-relaxed">{children}</p>
+            },
             h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>,
             h2: ({ children }) => <h2 className="text-2xl font-semibold mt-6 mb-3">{children}</h2>,
             h3: ({ children }) => <h3 className="text-xl font-medium mt-4 mb-2">{children}</h3>,
@@ -96,6 +116,11 @@ export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
             ),
             tr: ({ children }) => (
               <tr className="align-top">{children}</tr>
+            ),
+            img: ({ src, alt }) => (
+              <div className="my-12 rounded-[2rem] overflow-hidden border border-neutral-100 dark:border-neutral-800">
+                <img src={src} alt={alt} className="w-full h-auto object-cover" />
+              </div>
             ),
             th: ({ children }) => (
               <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-neutral-600 dark:text-neutral-300 border border-neutral-200/70 dark:border-neutral-800">

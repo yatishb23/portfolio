@@ -5,6 +5,7 @@ export const blogs: BlogPost[] = [
     id: '1',
     title: 'How IntelliSense Really Works in VS Code',
     description: 'An in-depth exploration of how VS Code IntelliSense parses, analyzes, and understands your code.',
+    coverImage: '/cover.jpeg',
     content: `# I Thought IntelliSense Was Just Autocomplete. I Was Very Wrong
 
 Yesterday, I was coding in VS Code. I typed:
@@ -117,6 +118,8 @@ The language server has already built a **dependency graph** and knows the signa
 
 
 # Language Server Protocol (LSP)
+
+![IntelliSense Flow](/flow.jpeg)
 
 Here’s the real magic: **VS Code itself doesn’t understand languages deeply.**  
 
