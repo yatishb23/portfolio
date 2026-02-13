@@ -10,18 +10,20 @@ interface BlogPostClientProps {
 
 export default function BlogPostClient({ blog }: BlogPostClientProps) {
   return (
-    <div className="w-full min-h-screen bg-inherit pt-16">
-      <div className="max-w-4xl flex flex-col items-start px-6 md:px-12 lg:ml-100 pt-4 md:pt-6 space-y-8 md:space-y-12 mx-auto">
-        <div className="w-full">
+    <div className="w-full min-h-screen bg-white dark:bg-neutral-950 pt-32 pb-20">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="mb-12">
           <Link 
             href="/blog" 
-            className="text-sm sm:text-base md:text-lg mb-4 sm:mb-6 md:mb-8 inline-flex items-center hover:underline transition-colors"
+            className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors"
           >
-            <span className="mr-2">←</span>
-            <span>Back to blogs</span>
+            <svg className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to blogs
           </Link>
-          <BlogContent blog={blog} />
         </div>
+        <BlogContent blog={blog} />
       </div>
     </div>
   )

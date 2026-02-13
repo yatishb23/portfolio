@@ -1,13 +1,17 @@
 "use client";
 
-import Link from "next/link";
-import HeaderDiv from "@/components/Layouts/Homepages/Header";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import TechSkills from "@/components/Sections/LandingPages/Skills";
+import Profiles from "@/components/Sections/Coding_Section/Profiles";
+import Experience from "@/components/Sections/LandingPages/Experience";
+import Collab from "@/components/Sections/LandingPages/Contact";
+import Footer from "@/components/Sections/LandingPages/Footer";
+import Thoughts from "@/components/Sections/LandingPages/Thoughts";
+import LeetCodeHeatmap from "@/components/Heatmap";
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(true);
-  const [activeSection, setActiveSection] = useState("");
+  const [isDark] = useState(true);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
@@ -20,7 +24,6 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-fade-in-up");
-            setActiveSection(entry.target.id);
           }
         });
       },
@@ -34,91 +37,94 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
-
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
-      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16">
+    <div className="min-h-screen bg-neutral-50 dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-200 dark:selection:bg-neutral-800">
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
         <header
           id="intro"
           ref={(el) => {
             sectionsRef.current[0] = el;
           }}
-          className="min-h-screen flex items-center opacity-0"
+          className="min-h-screen flex items-center opacity-0 py-20"
         >
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-            <div className="lg:col-span-3 space-y-6 sm:space-y-8">
-              
-              <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground font-mono tracking-wider py-10">
-                  PORTFOLIO / Experiment / 2025
+            <div className="lg:col-span-3 space-y-8">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-200/50 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-700 text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+                  <span className="w-1 h-1 rounded-full bg-neutral-400 animate-pulse" />
+                  Portfolio / 2026 Edition
                 </div>
-                <div className="flex items-center">
-                  <img
-                    src="yatish2.png"
-                    alt="Profile Picture"
-                    className=" w-32 h-32 object-cover mx-auto ml-0 rounded-sm"
-                  />
+                
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-neutral-200 to-neutral-300 dark:from-neutral-800 dark:to-neutral-700 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+                    <Image
+                      src="/yatish2.png"
+                      alt="Yatish Badgujar"
+                      width={128}
+                      height={128}
+                      className="relative w-32 h-32 object-cover rounded-2xl border-2 border-white dark:border-neutral-900 shadow-xl transition-all duration-500"
+                    />
+                  </div>
                   <div>
-                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
+                    <h1 className="text-6xl sm:text-7xl font-black tracking-tighter leading-none">
                       Yatish
                       <br />
-                      <span className="text-muted-foreground">Badgujar</span>
+                      <span className="text-neutral-400 dark:text-neutral-600">Badgujar</span>
                     </h1>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-6 max-w-md">
-                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Frontend Developer crafting digital experiences at the
-                  intersection of
-                  <span className="text-foreground"> design</span>,
-                  <span className="text-foreground"> technology</span>, and
-                  <span className="text-foreground"> user experience</span>.
+              <div className="space-y-6 max-w-lg">
+                <p className="text-xl sm:text-2xl text-neutral-600 dark:text-neutral-400 leading-tight font-medium">
+                  Frontend Developer crafting high-fidelity digital experiences at the intersection of
+                  <span className="text-neutral-900 dark:text-neutral-100"> design</span>,
+                  <span className="text-neutral-900 dark:text-neutral-100"> engineering</span>, and
+                  <span className="text-neutral-900 dark:text-neutral-100"> user delight</span>.
                 </p>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-neutral-400">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Available for work
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse" />
+                    Available for projects
                   </div>
-                  <div>India</div>
+                  <div className="flex items-center gap-2">
+                    <span className="opacity-50">Based in</span>
+                    <span className="text-neutral-600 dark:text-neutral-300">Maharashtra, India</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-2 flex flex-col justify-end space-y-6 sm:space-y-8 mt-8 lg:mt-0">
-              <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">
-                  CURRENTLY
+            <div className="lg:col-span-2 flex flex-col justify-end gap-10 mt-8 lg:mt-0">
+              <div className="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-4">
+                  Current Status
                 </div>
-                <div className="space-y-2">
-                  <div className="text-foreground">
-                    Student at Government College of Engineering, Chh.
-                    Sambhajinagar
+                <div className="space-y-3">
+                  <div className="text-sm font-bold text-neutral-800 dark:text-neutral-200 leading-snug">
+                    Final Year Engineering Student @ GCOEC
                   </div>
-                  <div className="text-muted-foreground">
-                    GTE at Pratiti Technologies
+                  <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                    Graduate Trainee Engineer @ Pratiti Technologies
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    2022 — Present
+                  <div className="pt-2 flex items-center gap-2">
+                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 rounded text-neutral-400">2022 — Present</span>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">
-                  FOCUS
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 ml-1">
+                  Primary Stack
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {["Next.js", "React", "TypeScript", "Java", "Node.js"].map(
                     (skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
+                        className="px-3 py-1.5 text-[11px] font-bold border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-full text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 cursor-default"
                       >
                         {skill}
                       </span>
@@ -135,161 +141,57 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[1] = el;
           }}
-          className="min-h-screen py-6 sm:py-8 opacity-0"
+          className="min-h-screen py-24 opacity-0"
         >
-          <div className="space-y-12 sm:space-y-16">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <h2 className="text-3xl sm:text-4xl font-light">Selected Work</h2>
-              <div className="text-sm text-muted-foreground font-mono">
-                2024 — 2026
-              </div>
-            </div>
-
-            <div className="space-y-8 sm:space-y-12">
-              {[
-                {
-                  year: "2026",
-                  role: "Software Engineer Intern",
-                  company: "Pratiti Technologies",
-                  description:
-                    "Built performant interfaces for project management and team collaboration.",
-                  tech: ["Java", "Hibernate", "MySQL"],
-                },
-                {
-                  year: "2024",
-                  role: "Developer Intern",
-                  company: "Horus Consulting",
-                  description:
-                    "Contributed to building internal tools and client projects focused on data visualization.",
-                  tech: ["React", "TypeScript", "Next.js"],
-                }
-              ].map((job, index) => (
-                <div
-                  key={index}
-                  className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
-                >
-                  <div className="lg:col-span-2">
-                    <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
-                      {job.year}
-                    </div>
-                  </div>
-
-                  <div className="lg:col-span-6 space-y-3">
-                    <div>
-                      <h3 className="text-lg sm:text-xl font-medium">
-                        {job.role}
-                      </h3>
-                      <div className="text-muted-foreground">{job.company}</div>
-                    </div>
-                    <p className="text-muted-foreground leading-relaxed max-w-lg">
-                      {job.description}
-                    </p>
-                  </div>
-
-                  <div className="lg:col-span-4 flex flex-wrap gap-2 lg:justify-end mt-2 lg:mt-0">
-                    {job.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs text-muted-foreground rounded group-hover:border-muted-foreground/50 transition-colors duration-500"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Experience/>
         </section>
+
         <section
-          id="thoughts"
+          id="skills"
           ref={(el) => {
             sectionsRef.current[2] = el;
           }}
-          className="max-h-3xl py-6 sm:py-8 opacity-0"
+          className="py-24 opacity-0"
         > 
-        <TechSkills />
+          {/* <div className="p-8 sm:p-12 rounded-[2.5rem] bg-neutral-900 dark:bg-neutral-950 text-white shadow-2xl shadow-neutral-500/10"> */}
+            <TechSkills />
+          {/* </div> */}
         </section>
+
+
+        <section
+          id="coding"
+          ref={(el) => {
+            sectionsRef.current[6] = el;
+          }}
+          className="py-24 opacity-0"
+        > 
+          <div className="space-y-1">
+            <h2 className="text-4xl font-black tracking-tighter text-neutral-900 dark:text-neutral-100">LeetCode Activity</h2>
+            <p className="text-neutral-500 dark:text-neutral-400 font-medium font-sans pb-14 pt-4">
+              A visual representation of my problem-solving journey on LeetCode, showcasing consistency and dedication to honing my coding skills.
+            </p>
+          </div>
+          <LeetCodeHeatmap username="yatish_23" />
+        </section>  
+        <section
+          id="coding"
+          ref={(el) => {
+            sectionsRef.current[5] = el;
+          }}
+          className="py-24 opacity-0"
+        > 
+          <Profiles/>
+        </section>
+
         <section
           id="thoughts"
           ref={(el) => {
             sectionsRef.current[3] = el;
           }}
-          className="min-h-2xl py-24 opacity-0"
+          className="py-24 opacity-0"
         >
-          <div className="space-y-12 sm:space-y-16">
-            <h2 className="text-3xl sm:text-4xl font-light">Recent Thoughts</h2>
-
-            <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
-              {[
-                {
-                  title: "The Future of Web Development",
-                  excerpt:
-                    "Exploring how AI and automation are reshaping the way we build for the web.",
-                  date: "Dec 2024",
-                  readTime: "5 min",
-                },
-                {
-                  title: "Design Systems at Scale",
-                  excerpt:
-                    "Lessons learned from building and maintaining design systems across multiple products.",
-                  date: "Nov 2024",
-                  readTime: "8 min",
-                },
-                {
-                  title: "Performance-First Development",
-                  excerpt:
-                    "Why performance should be a first-class citizen in your development workflow.",
-                  date: "Oct 2024",
-                  readTime: "6 min",
-                },
-                {
-                  title: "The Art of Code Review",
-                  excerpt:
-                    "Building better software through thoughtful and constructive code reviews.",
-                  date: "Sep 2024",
-                  readTime: "4 min",
-                },
-              ].map((post, index) => (
-                <article
-                  key={index}
-                  className="group p-6 sm:p-8 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500 hover:shadow-lg cursor-pointer"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
-                      <span>{post.date}</span>
-                      <span>{post.readTime}</span>
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl font-medium group-hover:text-muted-foreground transition-colors duration-300">
-                      {post.title}
-                    </h3>
-
-                    <p className="text-muted-foreground leading-relaxed">
-                      {post.excerpt}
-                    </p>
-
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                      <span>Read more</span>
-                      <svg
-                        className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
+          <Thoughts/>
         </section>
 
         <section
@@ -297,136 +199,14 @@ export default function Home() {
           ref={(el) => {
             sectionsRef.current[4] = el;
           }}
-          className="py-6 sm:py-8 opacity-0"
+          className="py-24 border-t border-neutral-200 dark:border-neutral-800"
         >
-          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
-            <div className="space-y-6 sm:space-y-8">
-              <h2 className="text-3xl sm:text-4xl font-light">Let's Connect</h2>
-
-              <div className="space-y-6">
-                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Always interested in new opportunities, collaborations, and
-                  conversations about technology and design.
-                </p>
-
-                <div className="space-y-4">
-                  <Link
-                    href="mailto:yatishbad232@gmail.com"
-                    className="group flex items-center gap-3 text-foreground hover:text-muted-foreground transition-colors duration-300"
-                  >
-                    <span className="text-base sm:text-lg">
-                      yatishbad232@gmail.com
-                    </span>
-                    <svg
-                      className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6 sm:space-y-8">
-              <div className="text-sm text-muted-foreground font-mono">
-                ELSEWHERE
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { name: "GitHub", handle: "@yatishb23", url: "#" },
-                  { name: "leetcode", handle: "@yatish_23", url: "#" },
-                  { name: "LinkedIn", handle: "yatish-badgujar", url: "#" },
-                ].map((social) => (
-                  <Link
-                    key={social.name}
-                    href={social.url}
-                    className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover:shadow-sm"
-                  >
-                    <div className="space-y-2">
-                      <div className="text-foreground group-hover:text-muted-foreground transition-colors duration-300">
-                        {social.name}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {social.handle}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
+          <Collab/>
         </section>
 
-        <footer className="py-12 sm:py-16 border-t border-border">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 sm:gap-8">
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">
-                © 2026 Yatish Badgujar. All rights reserved.
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Built by Scrapper
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={toggleTheme}
-                className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
-                aria-label="Toggle theme"
-              >
-                {isDark ? (
-                  <svg
-                    className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </svg>
-                )}
-              </button>
-
-              <button className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300">
-                <svg
-                  className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </footer>
+        <Footer/>
       </main>
-
-      <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none"></div>
+      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-neutral-50 dark:from-[#0a0a0a] via-transparent to-transparent pointer-events-none z-50"></div>
     </div>
   );
 }

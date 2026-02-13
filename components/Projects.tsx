@@ -35,32 +35,64 @@ const Projects = () => {
   const displayedProjects = showAll ? projects : projects.slice(0, 3);
 
   return (
-    <div className="max-w-3xl mx-auto mt-8">
-      <div className="space-y-8">
+    <div className="max-w-5xl mx-auto mt-12 bg-white dark:bg-neutral-950 rounded-[2.5rem] border border-neutral-100 dark:border-neutral-900 p-8 shadow-sm">
+      <div className="flex items-center justify-between mb-12">
+        <h2 className="text-2xl font-black tracking-tight text-neutral-950 dark:text-neutral-50 flex items-center gap-2">
+          Projects<span className="text-neutral-300 dark:text-neutral-700">.</span>
+        </h2>
+        {projects.length > 3 && (
+            <button
+            onClick={() => setShowAll(!showAll)}
+            className="text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all"
+            >
+            {showAll ? "Show Less" : `View All ${projects.length}`}
+            </button>
+        )}
+      </div>
+
+      <div className="grid gap-1 bg-neutral-100 dark:bg-neutral-900 overflow-hidden rounded-3xl border border-neutral-100 dark:border-neutral-900">
         {displayedProjects.map((project, index) => (
-          <div key={index} className="border-b border-neutral-500 pb-6">
-            <div className="flex items-center justify-between mb-2">
-              <Link href={project.liveLink} target="_blank" className="text-lg md:text-xl hover:underline">
-                {project.title}
-              </Link>
-              <Link href={project.githubLink} target="_blank" className="hover:opacity-70">
-                <FaGithub className="size-5 md:size-6" />
-              </Link>
+          <div key={index} className="group relative bg-white dark:bg-neutral-950 p-8 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all duration-300">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-4">
+                    <span className="text-4xl font-black text-neutral-100 dark:text-neutral-800 transition-colors group-hover:text-neutral-200 dark:group-hover:text-neutral-700">
+                        {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-black tracking-tight text-neutral-800 dark:text-neutral-200">
+                        {project.title}
+                    </h3>
+                </div>
+                <p className="text-md font-medium text-neutral-500 dark:text-neutral-400 line-clamp-2 max-w-2xl leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Link 
+                    href={project.githubLink} 
+                    target="_blank" 
+                    className="flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white transition-all hover:scale-110 active:scale-95"
+                >
+                    <FaGithub className="h-5 w-5" />
+                </Link>
+                {project.liveLink && (
+                    <Link 
+                        href={project.liveLink} 
+                        target="_blank" 
+                        className="flex items-center gap-3 px-6 h-12 rounded-2xl bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-black uppercase text-[10px] tracking-[0.2em] transition-all hover:scale-[1.03] active:scale-95 shadow-xl"
+                    >
+                        Live Preview
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </Link>
+                )}
+              </div>
             </div>
-            <p className="text-sm md:text-lg text-neutral-600 dark:text-neutral-400 mb-3">
-              {project.description}
-            </p>
           </div>
         ))}
       </div>
-      {projects.length > 3 && (
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="mt-8 text-sm md:text-base hover:underline"
-        >
-          {showAll ? "Show Less" : "View More"}
-        </button>
-      )}
     </div>
   );
 };

@@ -1,11 +1,9 @@
 "use client";
 
-
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const About = () => {
-
   const skills = [
     {
       category: "Frontend",
@@ -18,71 +16,83 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br dark:from-[#0A0A0F] dark:to-[#12121A] dark:text-neutral-200 from-zinc-50 to-zinc-100">
-      <div className="container max-w-2xl mx-auto px-4 pt-32 space-y-10">
-        {/* Heading */}
-        <Link
-          href="/"
-          className="text-sm md:text-base inline-block hover:underline"
-        >
-          ← Back to home
-        </Link>
-        <div className="space-y-4 border-b border-neutral-600">
-          <h1 className="text-4xl font-semibold tracking-tight ">About Me</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg pb-6">
-            I’m Yatish, a 3rd-year Computer Engineering student passionate about
-            full-stack development, AI/ML, and building efficient, real-world
-            tech solutions.
-          </p>
+    <div className="min-h-screen pt-32 pb-20 bg-white dark:bg-neutral-950">
+      <div className="max-w-4xl mx-auto px-6">
+        {/* Heading Section */}
+        <div className="mb-20">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors mb-10"
+          >
+            <svg className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to home
+          </Link>
+          
+          <div className="space-y-8">
+            <h1 className="text-6xl md:text-8xl font-black tracking-[-0.05em] text-neutral-950 dark:text-neutral-50 leading-none">
+              About Me<span className="text-neutral-200 dark:text-neutral-800">.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-neutral-500 dark:text-neutral-400 font-medium max-w-3xl leading-relaxed">
+              I&apos;m Yatish, a final year Computer Engineering student passionate about
+              full-stack development, AI/ML, and building efficient, real-world
+              tech solutions.
+            </p>
+          </div>
         </div>
 
-        {/* Skills */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full"
-        >
-          <div className="border-b border-neutral-600 pb-6">
-            <h2 className={`text-xl md:text-2xl font-medium mb-6 `}>
-              Technical Skills
-            </h2>
+        <div className="grid gap-20">
+          {/* Skills Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="p-10 md:p-16 rounded-[3rem] bg-neutral-50 dark:bg-neutral-900/30 border border-neutral-100 dark:border-neutral-900 shadow-sm"
+          >
+            <div className="space-y-12">
+              <div className="flex items-center gap-4">
+                 <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50">Technical Skills</h2>
+                 <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+              </div>
 
-            <div className="grid gap-6">
-              {skills.map((group, i) => (
-                <div key={i} className="space-y-3">
-                  <h3 className="text-lg font-medium text-neutral-700 dark:text-neutral-300">
-                    {group.category}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {group.items.map((item, j) => (
-                      <motion.span
-                        key={j}
-                        whileHover={{ scale: 1.05 }}
-                        className="px-3 py-1.5 rounded-md text-sm dark:bg-neutral-800/50 dark:text-neutral-200 bg-neutral-100 text-neutral-800 border dark:border-neutral-700 border-neutral-300"
-                      >
-                        {item}
-                      </motion.span>
-                    ))}
+              <div className="grid md:grid-cols-2 gap-12">
+                {skills.map((group, i) => (
+                  <div key={i} className="space-y-6">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400 dark:text-neutral-600 border-l-2 border-neutral-200 dark:border-neutral-800 pl-4">
+                      {group.category}
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {group.items.map((item, j) => (
+                        <span
+                          key={j}
+                          className="px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest bg-white dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 border border-neutral-100 dark:border-neutral-900 shadow-sm hover:scale-105 hover:bg-neutral-950 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all cursor-default"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.section>
+          </motion.section>
 
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full "
-        >
-          <div className="border-b border-neutral-600 pb-6">
-            <h2 className={`text-xl md:text-2xl font-medium mb-6 `}>
-              Leadership & Roles
-            </h2>
+          {/* Roles Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="grid lg:grid-cols-12 gap-12"
+          >
+            <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-4">
+              <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50">Leadership</h2>
+              <p className="text-neutral-500 dark:text-neutral-400 font-medium">Community engagement and team leadership roles.</p>
+            </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4">
               {[
                 { title: "Deputy Marketing Head", desc: "GECA MUN Club" },
                 {
@@ -98,75 +108,21 @@ const About = () => {
                   desc: "Cloud Study Jam & GenAI Workshop",
                 },
               ].map((role, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -2 }}
-                  className="p-4 rounded-md dark:bg-neutral-800/30 bg-neutral-100 border dark:border-neutral-700 border-neutral-300"
-                >
-                  <h3 className="text-lg font-medium dark:text-neutral-200 text-neutral-800">
-                    {role.title}
-                  </h3>
-                  <p className="text-sm dark:text-neutral-400 text-neutral-600 mt-1">
-                    {role.desc}
-                  </p>
-                </motion.div>
+                <div key={i} className="p-8 rounded-[2rem] bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 shadow-sm group hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all">
+                   <div className="w-10 h-10 rounded-2xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                      <span className="text-xs font-black text-neutral-950 dark:text-neutral-50">{i + 1}</span>
+                   </div>
+                   <h4 className="text-lg font-black tracking-tight text-neutral-800 dark:text-neutral-200 mb-2">{role.title}</h4>
+                   <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">{role.desc}</p>
+                </div>
               ))}
             </div>
-          </div>
-        </motion.section>
-
-        {/* Certifications and Goals */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full mb-10"
-        >
-          <div className="border-b border-neutral-600 pb-6">
-            <h2 className={`text-xl md:text-2xl font-medium mb-6`}>
-              Current Focus
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <motion.div
-                whileHover={{ y: -2 }}
-                className="p-5 rounded-md dark:bg-neutral-800/30 bg-neutral-100 border dark:border-neutral-700 border-neutral-300"
-              >
-                <h3 className="text-lg font-medium dark:text-neutral-200 text-neutral-800 mb-3">
-                  Current Goals
-                </h3>
-                <ul className="space-y-2 text-sm dark:text-neutral-400 text-neutral-600">
-                  <li className="flex items-start">
-                    <span className="mr-2 dark:text-cyan-400 text-cyan-600">
-                      •
-                    </span>
-                    <span>Seeking SDE and IT internships</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2 dark:text-cyan-400 text-cyan-600">
-                      •
-                    </span>
-                    <span>Improving coding interview confidence</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2 dark:text-cyan-400 text-cyan-600">
-                      •
-                    </span>
-                    <span>Mastering clean code and optimization</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <span className="px-3 py-1 rounded-md text-xs dark:bg-neutral-700/50 dark:text-neutral-300 bg-neutral-200 text-neutral-700">
-                    600+ DSA Problems Solved
-                  </span>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
+          </motion.section>
+        </div>
       </div>
     </div>
   );
 };
 
 export default About;
+

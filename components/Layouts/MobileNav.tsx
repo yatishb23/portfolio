@@ -2,29 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { HiX } from "react-icons/hi";
 import { navbarConfig } from "@/data/Navbar";
-import ModeToggle from "../theme/theme-toggle";
 
 export default function MobileNav({ onClose }: { onClose: () => void }) {
   return (
-    <motion.div
-      initial={{ x: "-100%" }}
-      animate={{ x: 0 }}
-      exit={{ x: "-100%" }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="fixed top-0 left-0 h-full w-64 z-50 bg-white dark:bg-neutral-950 flex flex-col p-6 shadow-lg"
-    >
-      {/* Close Button */}
-      <div className="flex justify-end mb-6">
-        <button
-          onClick={onClose}
-          className="text-3xl text-neutral-900 dark:text-white hover:scale-110 transition-all"
-        >
-          <HiX />
-        </button>
-      </div>
-
+    <div className=" flex flex-col gap-8">
       {/* Navigation Links */}
       <motion.ul
         initial="hidden"
@@ -36,27 +18,43 @@ export default function MobileNav({ onClose }: { onClose: () => void }) {
             transition: { staggerChildren: 0.1, delayChildren: 0.1 },
           },
         }}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-3"
       >
-        <ModeToggle />
         {navbarConfig.navItems.map((item, idx) => (
           <motion.li
             key={idx}
             variants={{
-              hidden: { opacity: 0, x: -20 },
-              show: { opacity: 1, x: 0 },
+              hidden: { opacity: 0, y: 10 },
+              show: { opacity: 1, y: 0 },
             }}
           >
             <Link
               href={item.href}
               onClick={onClose}
-              className="block text-lg font-medium text-neutral-900 dark:text-white hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
+              className="group flex items-center justify-between p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-100 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 hover:bg-white dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm"
             >
-              {item.label}
+              <div className="flex items-center gap-4">
+                <span className="text-lg font-bold tracking-tight text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors">
+                  {item.label}
+                </span>
+              </div>
+              <svg className="w-5 h-5 text-neutral-300 dark:text-neutral-700 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </motion.li>
         ))}
       </motion.ul>
-    </motion.div>
+
+      <div className="pt-6 border-t border-neutral-100 dark:border-neutral-800">
+         <div className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400 dark:text-neutral-500 mb-4 px-2">
+           Digital Presence
+         </div>
+         <div className="grid grid-cols-2 gap-3 px-2">
+            <div className="text-xs font-bold text-neutral-500 dark:text-neutral-400">© 2026 YB.</div>
+            <div className="text-[10px] font-medium text-neutral-300 dark:text-neutral-700 uppercase tracking-widest text-right">Portfolio Experiment</div>
+         </div>
+      </div>
+    </div>
   );
 }

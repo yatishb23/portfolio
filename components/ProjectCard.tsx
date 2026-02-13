@@ -16,11 +16,25 @@ export const ProjectCard = ({
   if (!isDetailed) {
     return (
       <Link href={`/projects/${project.id}`}>
-        <div className="pb-5 border-b border-neutral-600">
-          <div className="hover:underline py-2 text-lg md:text-xl  dark:border-neutral-500">
-            {project.title}
+        <div className="group p-6 rounded-[2rem] bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-100 dark:border-neutral-800 hover:bg-white dark:hover:bg-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 shadow-sm">
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="text-xl font-black tracking-tight text-neutral-950 dark:text-neutral-50 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors">
+              {project.title}
+            </h3>
+            <div className="p-2 rounded-xl bg-neutral-200 dark:bg-neutral-800 text-neutral-500 transition-colors group-hover:bg-neutral-950 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-950">
+              <FiArrowUpRight className="w-5 h-5" />
+            </div>
           </div>
-          <h3 className="text-neutral-600">{project.smallDes}</h3>
+          <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400 leading-relaxed line-clamp-2">
+            {project.smallDes}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {project.tags.slice(0, 3).map((tag) => (
+              <span key={tag} className="text-[10px] font-black uppercase tracking-widest text-neutral-300 dark:text-neutral-600">
+                #{tag}
+              </span>
+            ))}
+          </div>
         </div>
       </Link>
     );

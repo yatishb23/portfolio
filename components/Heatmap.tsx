@@ -22,6 +22,7 @@ export default function LeetCodeHeatmap({ username }: LeetCodeHeatmapProps) {
   const [heatmapData, setHeatmapData] = useState<HeatmapData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hoveredData, setHoveredData] = useState<{ count: number; date: string } | null>(null);
   const [stats, setStats] = useState<Stats>({
     totalSubmissions: 0,
     activeStreak: 0,
@@ -100,11 +101,11 @@ export default function LeetCodeHeatmap({ username }: LeetCodeHeatmapProps) {
   }, [username]);
 
   const getColorClass = (count: number) => {
-    if (count === 0) return "bg-[#E5E7EB] dark:bg-[#1C1C1A]";
-    if (count <= 3) return "bg-[#9BE9A8] dark:bg-[#0E4429]";
-    if (count <= 6) return "bg-[#40C463] dark:bg-[#006D32]";
-    if (count <= 9) return "bg-[#30A14E] dark:bg-[#26A641]";
-    return "bg-[#216E39] dark:bg-[#39D353]";
+    if (count === 0) return "bg-neutral-100 dark:bg-neutral-900/50";
+    if (count <= 3) return "bg-emerald-200 dark:bg-emerald-900/40";
+    if (count <= 6) return "bg-emerald-400 dark:bg-emerald-700/60";
+    if (count <= 9) return "bg-emerald-500 dark:bg-emerald-500";
+    return "bg-emerald-600 dark:bg-emerald-400";
   };
 
   const generateRollingYearData = () => {
@@ -145,16 +146,20 @@ export default function LeetCodeHeatmap({ username }: LeetCodeHeatmapProps) {
 
   if (loading) {
     return (
-      <div className="p-6 rounded-2xl border animate-pulse dark:bg-[#12121A] dark:text-gray-200 dark:border-white/20 bg-white text-gray-900 border-gray-200">
-        <div className="flex justify-between mb-8">
-          <Skeleton className="h-6 w-48 rounded-md" />
-          <Skeleton className="h-4 w-36 rounded-md" />
+      <div className="p-10 rounded-[3rem] border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/50 animate-pulse">
+        <div className="flex justify-between items-center mb-10">
+          <Skeleton className="h-10 w-48 rounded-2xl bg-neutral-200 dark:bg-neutral-800" />
+          <Skeleton className="h-6 w-36 rounded-xl bg-neutral-200 dark:bg-neutral-800" />
         </div>
-        <div className="grid grid-cols-4 gap-5 justify-center">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="flex flex-col items-center space-y-2">
-              <Skeleton className="h-8 w-12 rounded-md" />
-              <Skeleton className="h-3 w-24 rounded-md" />
+        <div className="flex gap-4 overflow-hidden mask-fade-right">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="flex flex-col gap-2">
+              <div className="grid grid-rows-7 gap-1.5">
+                {Array.from({ length: 7 }).map((_, j) => (
+                  <Skeleton key={j} className="h-3.5 w-3.5 rounded-sm bg-neutral-200 dark:bg-neutral-800" />
+                ))}
+              </div>
+              <Skeleton className="h-3 w-8 rounded bg-neutral-100 dark:bg-neutral-900 mx-auto" />
             </div>
           ))}
         </div>
@@ -163,58 +168,104 @@ export default function LeetCodeHeatmap({ username }: LeetCodeHeatmapProps) {
   }
 
   if (error) {
-    return <div className="text-red-500 dark:text-red-400">Error: {error}</div>;
+    return (
+      <div className="p-10 rounded-[3rem] border border-red-100 dark:border-red-900/30 bg-red-50/50 dark:bg-red-900/10 text-red-600 dark:text-red-400 font-bold text-center">
+        Error: {error}
+      </div>
+    );
   }
 
   const months = generateRollingYearData();
 
   return (
-    <div className="p-6 rounded-2xl border-2 dark:bg-[#12121A] dark:text-gray-200 dark:border-white/20 bg-white text-gray-900">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-lg font-light">{stats.totalSubmissions.toLocaleString()} submissions</h2>
-        <div className="text-sm text-gray-500 dark:text-gray-400">
-          Total active days: <span className="text-gray-900 dark:text-gray-200">{stats.totalActiveDays}</span>
+    <div className="group p-8 rounded-[3rem] border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/50 shadow-xl dark:shadow-2xl shadow-neutral-500/5 transition-all duration-500">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-6">
+        <div className="space-y-1">
+          <h2 className="text-3xl font-black tracking-[-0.05em] text-neutral-950 dark:text-neutral-50">
+            {stats.totalSubmissions.toLocaleString()} <span className="text-neutral-400 dark:text-neutral-600">Submissions</span>
+          </h2>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500">
+            LeetCode Activity • Past 12 Months
+          </p>
+        </div>
+        
+        <div className="flex items-center gap-6 px-5 py-2.5 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 shadow-sm transition-transform group-hover:scale-[1.02]">
+          <div className="flex flex-col">
+            <span className="text-lg font-black text-neutral-900 dark:text-neutral-100">{stats.activeStreak}</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter text-neutral-400">Current Streak</span>
+          </div>
+          <div className="w-px h-6 bg-neutral-100 dark:bg-neutral-900" />
+          <div className="flex flex-col">
+            <span className="text-lg font-black text-neutral-900 dark:text-neutral-100">{stats.totalActiveDays}</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter text-neutral-400">Active Days</span>
+          </div>
         </div>
       </div>
-      <div className="relative overflow-auto">
-        <div className="flex gap-3 justify-center">
-          {months.map((month, idx) => (
-            <div key={`${month.name}-${month.year}-${idx}`} className="flex flex-col">
-              <div className="grid grid-rows-7 grid-flow-col gap-[2px]">
-                {Array.from({ length: 7 }).map((_, weekday) => (
-                  <div key={weekday} className="flex gap-[2px]">
-                    {month.days
-                      .filter((d) => d.weekday === weekday)
-                      .map((d, i) =>
-                        !d.date ? (
-                          <div key={i} className="w-[12px] h-[12px] bg-transparent" />
-                        ) : (
-                          <div
-                            key={d.date}
-                            className={`w-[12px] h-[12px] rounded ${getColorClass(
-                              heatmapData.find((item) => item.date === d.date)?.count || 0
-                            )} relative group transition-colors duration-200`}
-                          >
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-50">
-                              <div className="px-3 py-2 rounded border text-xs shadow-lg whitespace-nowrap bg-white text-gray-900 dark:bg-[#1C1C1C] dark:text-gray-200 dark:border-gray-700">
-                                {`${heatmapData.find((item) => item.date === d.date)?.count || 0} submissions on ${new Date(
-                                  d.date
-                                ).toLocaleDateString("en-US", {
-                                  month: "long",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}`}
-                              </div>
-                            </div>
-                          </div>
-                        )
-                      )}
-                  </div>
-                ))}
+
+      <div className="relative">
+        <div className="overflow-x-auto pb-4 scrollbar-hide">
+          <div className="flex gap-4 min-w-max">
+            {months.map((month, idx) => (
+              <div key={`${month.name}-${month.year}-${idx}`} className="flex flex-col">
+                <div className="grid grid-rows-7 grid-flow-col gap-1.5">
+                  {Array.from({ length: 7 }).map((_, weekday) => (
+                    <div key={weekday} className="flex gap-1.5">
+                      {month.days
+                        .filter((d) => d.weekday === weekday)
+                        .map((d, i) =>
+                          !d.date ? (
+                            <div key={i} className="w-3.5 h-3.5" />
+                          ) : (
+                            <div
+                              key={d.date}
+                              onMouseEnter={() => setHoveredData({
+                                count: heatmapData.find((item) => item.date === d.date)?.count || 0,
+                                date: d.date
+                              })}
+                              onMouseLeave={() => setHoveredData(null)}
+                              className={`w-3.5 h-3.5 rounded-[3px] ${getColorClass(
+                                heatmapData.find((item) => item.date === d.date)?.count || 0
+                              )} cursor-pointer transition-all hover:scale-125 hover:z-10`}
+                            />
+                          )
+                        )}
+                    </div>
+                  ))}
+                </div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-neutral-400 dark:text-neutral-600 mt-3 text-center">
+                  {month.name}
+                </div>
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 ml-5">{month.name}</div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Intensity Legend & Hover Info */}
+        <div className="mt-6 pt-6 border-t border-neutral-100 dark:border-neutral-900 flex items-center justify-between gap-3">
+          <div className="h-6 flex items-center">
+            {hoveredData ? (
+              <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-300">
+                <div className={`w-2 h-2 rounded-full ${getColorClass(hoveredData.count)}`} />
+                <span className="text-[10px] font-bold text-neutral-950 dark:text-neutral-50 uppercase tracking-widest">
+                  {hoveredData.count} Submissions on {new Date(hoveredData.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                </span>
+              </div>
+            ) : (
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-300 dark:text-neutral-700">
+                Hover over a cell for details
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Less</span>
+            <div className="flex gap-1.5">
+              {[0, 3, 6, 9, 12].map((val) => (
+                <div key={val} className={`w-3.5 h-3.5 rounded-[3px] ${getColorClass(val)}`} />
+              ))}
             </div>
-          ))}
+            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">More</span>
+          </div>
         </div>
       </div>
     </div>

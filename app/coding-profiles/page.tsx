@@ -1,6 +1,6 @@
 'use client'
 
-import Profiles from '@/components/Profiles'
+import Profiles from '@/components/Sections/Coding_Section/Profiles'
 import Link from 'next/link'
 import LeetCodeHeatmap from '@/components/Heatmap'
 

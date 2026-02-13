@@ -45,18 +45,21 @@ export default async function ProjectPage({ params }: Props) {
   }
   
   return (
-    <div className="min-h-screen py-20 bg-gradient-to-br dark:from-[#0A0A0F] dark:to-[#12121A] dark:text-neutral-200 from-zinc-50 to-zinc-100">
-      <div className="flex flex-col items-start px-6 md:px-12 lg:ml-100 pt-4 md:pt-6 space-y-8 md:space-y-12 max-w-3xl mx-auto">
-        <div className="w-full flex justify-end items-center">
-        </div>
-        <div className="w-full">
+    <div className="min-h-screen py-32 bg-white dark:bg-neutral-950">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="mb-12">
           <Link
             href="/projects"
-            className="text-sm sm:text-base md:text-lg mb-4 sm:mb-6 md:mb-8 inline-flex items-center hover:underline transition-colors text-gray-700 dark:text-gray-400"
+            className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors"
           >
-            
-            <span><span className="mr-2">←</span>Back to projects</span>
+            <svg className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to projects
           </Link>
+        </div>
+        
+        <div className="flex flex-col items-center">
           <ProjectCard project={project} isDetailed />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const response = await fetch("https://api.codolio.com/profile?userKey=yatish", {
+  const response = await fetch("https://api.codolio.com/profile?userKey=scrapper", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -10,21 +10,34 @@ interface BlogContentProps {
 
 export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
   return (
-    <article className="bg-inherit prose prose-neutral dark:prose-invert prose-headings:font-medium max-w-none px-4 md:px-0">
-      <header className="mb-8 md:mb-12 not-prose">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-medium mb-4 md:mb-6 break-words">{blog.title}</h1>
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-neutral-500 dark:text-neutral-400 gap-3 md:gap-4">
-          <div className="flex flex-wrap items-center gap-3 md:gap-4">
-            <span className="text-xs sm:text-sm md:text-base">{blog.date}</span>
-            <span className="text-xs sm:text-sm md:text-base">{blog.readTime}</span>
+    <article className="prose prose-neutral dark:prose-invert prose-headings:font-black prose-headings:tracking-tight max-w-none">
+      <header className="mb-16 not-prose">
+        <h1 className="text-4xl md:text-6xl font-black tracking-[-0.04em] text-neutral-950 dark:text-neutral-50 mb-8 leading-[1.1]">
+          {blog.title}
+        </h1>
+        
+        <div className="flex flex-wrap items-center gap-6 text-neutral-400 mb-8">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Published</span>
+            <span className="text-xs font-bold text-neutral-600 dark:text-neutral-300">{blog.date}</span>
           </div>
-          <span className="text-xs sm:text-sm md:text-base">{blog.author}</span>
+          <div className="w-1 h-1 rounded-full bg-neutral-200 dark:bg-neutral-800" />
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Read Time</span>
+            <span className="text-xs font-bold text-neutral-600 dark:text-neutral-300">{blog.readTime}</span>
+          </div>
+          <div className="w-1 h-1 rounded-full bg-neutral-200 dark:bg-neutral-800" />
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Author</span>
+            <span className="text-xs font-bold text-neutral-600 dark:text-neutral-300">{blog.author}</span>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2 mt-4 md:mt-6">
+
+        <div className="flex flex-wrap gap-2">
           {blog.tags.map(tag => (
             <span 
               key={tag} 
-              className="px-2 sm:px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 rounded-full text-xs whitespace-nowrap"
+              className="px-4 py-1.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-full text-[10px] font-black uppercase tracking-widest whitespace-nowrap hover:bg-neutral-950 hover:text-white dark:hover:bg-white dark:hover:text-neutral-950 transition-all cursor-default"
             >
               {tag}
             </span>
@@ -32,7 +45,7 @@ export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
         </div>
       </header>
       
-      <div className="content prose-sm sm:prose-base md:prose-lg">
+      <div className="content prose-neutral dark:prose-invert prose-lg md:prose-xl prose-p:text-neutral-600 dark:prose-p:text-neutral-400 prose-p:leading-relaxed prose-headings:text-neutral-950 dark:prose-headings:text-neutral-50">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
@@ -47,7 +60,7 @@ export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
             code: ({ className, children }) => {
               if (!className) {
                 return (
-                  <code className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+                  <code className="px-1.5 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-bold">
                     {children}
                   </code>
                 )
@@ -56,9 +69,12 @@ export const BlogContent: FC<BlogContentProps> = ({ blog }) => {
               const combinedClassName = `hljs ${className}`
 
               return (
-                <pre className="my-6 overflow-x-auto rounded-lg border border-neutral-200/70 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50 p-4">
-                  <code className={combinedClassName}>{children}</code>
-                </pre>
+                <div className="my-10 group relative">
+                  <div className="absolute -inset-2 bg-neutral-100 dark:bg-neutral-900 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <pre className="relative overflow-x-auto rounded-[1.5rem] border border-neutral-100 dark:border-neutral-900 bg-neutral-50/50 dark:bg-neutral-900/30 p-8 backdrop-blur-sm">
+                    <code className={combinedClassName}>{children}</code>
+                  </pre>
+                </div>
               )
             },
             table: ({ children }) => (

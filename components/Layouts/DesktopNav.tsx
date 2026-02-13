@@ -30,9 +30,11 @@ export default function DesktopNav() {
           >
             {/* Icon */}
             <span
-              className={`text-2xl flex-shrink-0 p-2 rounded-xl ${
-                hover === idx ? "text-green-500" : "text-neutral-400"
-              } transition-colors duration-300`}
+              className={`text-2xl flex-shrink-0 p-2 rounded-xl transition-all duration-300 ${
+                hover === idx 
+                  ? "text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-800 scale-110" 
+                  : "text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300"
+              }`}
             >
               {item.icon}
             </span>
@@ -45,8 +47,8 @@ export default function DesktopNav() {
                 width: hover === idx ? "auto" : 0,
                 marginLeft: hover === idx ? 8 : 0,
               }}
-              transition={{ duration: 0.25 }}
-              className="whitespace-nowrap font-medium text-sm text-neutral-200 dark:text-neutral-200 overflow-hidden"
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="whitespace-nowrap font-black text-[10px] uppercase tracking-widest text-neutral-900 dark:text-neutral-100 overflow-hidden"
             >
               {item.label}
             </motion.span>
