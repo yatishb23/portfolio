@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Layouts/Navbar";
 import { Provider } from "@/components/theme/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Visitors from "@/components/Visitors";
 import { IBM_Plex_Sans } from "next/font/google";
 
 export const metadata = {
@@ -16,7 +17,6 @@ const ibmPlexSans = IBM_Plex_Sans({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-
 export default function RootLayout({
   children,
 }: {
@@ -29,8 +29,9 @@ export default function RootLayout({
         <body>
           <Provider>
             <TooltipProvider>
-            <Navbar/>
-            {children}
+              <Visitors/>
+              <Navbar />
+              {children}
             </TooltipProvider>
           </Provider>
         </body>

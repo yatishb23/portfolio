@@ -33,6 +33,7 @@
     "react-lottie-player": "^2.1.0",
     "react-markdown": "^10.1.0",
     "recharts": "^2.15.1",
+    "redis": "^5.10.0",
     "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
     "rough-notation": "^0.5.1",

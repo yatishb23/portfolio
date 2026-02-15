@@ -13,7 +13,6 @@ import LeetCodeHeatmap from "@/components/Heatmap";
 export default function Home() {
   const [isDark] = useState(true);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);

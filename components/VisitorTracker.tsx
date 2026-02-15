@@ -7,31 +7,12 @@ export default function VisitorTracker() {
 
   useEffect(() => {
     const trackVisitor = async () => {
-      const hasVisited = localStorage.getItem("hasVisited");
-      
-      if (!hasVisited) {
-        // New visitor
-        try {
-          const res = await fetch("/api/visitors", { method: "POST" });
-          const data = await res.json();
-          if (data.count !== undefined) {
-            setCount(data.count);
-            localStorage.setItem("hasVisited", "true");
-          }
-        } catch (error) {
-          console.error("Error tracking visitor:", error);
-        }
-      } else {
-        // Returning visitor, just fetch the current count
-        try {
-          const res = await fetch("/api/visitors");
-          const data = await res.json();
-          if (data.count !== undefined) {
-            setCount(data.count);
-          }
-        } catch (error) {
-          console.error("Error fetching visitors:", error);
-        }
+      try {
+        const res = await fetch("/api/stats");
+        const data = await res.json();
+        setCount(data.uniqueVisitors);
+      } catch (error) {
+        console.error("Error:", error);
       }
     };
 
@@ -44,7 +25,7 @@ export default function VisitorTracker() {
     <div className="flex items-center gap-2">
       <div className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse" />
       <span className="text-xs font-medium text-neutral-500">
-        {count.toLocaleString()} unique visitors
+        {count} unique visitors
       </span>
     </div>
   );
