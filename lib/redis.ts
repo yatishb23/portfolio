@@ -8,10 +8,10 @@ export const redis =
   globalForRedis.redis ??
   createClient({
     username: "default",
-    password: process.env.NEXT_PUBLIC_REDIS_PASSWORD,
+    password: process.env.REDIS_PASSWORD,
     socket: {
-      host: process.env.NEXT_PUBLIC_REDIS_HOST,
-      port: Number(process.env.NEXT_PUBLIC_REDIS_PORT),
+      host: process.env.REDIS_HOST,
+      port: Number(process.env.REDIS_PORT),
     },
   });
 
