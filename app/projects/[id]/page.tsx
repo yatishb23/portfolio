@@ -45,8 +45,8 @@ export default async function ProjectPage({ params }: Props) {
   }
   
   return (
-    <div className="min-h-screen py-32 bg-white dark:bg-neutral-950">
-      <div className="max-w-5xl mx-auto px-6">
+    <div className=" min-h-screen py-32 bg-white dark:bg-neutral-950">
+      <div className="max-w-4xl mx-auto px-6">
         <div className="mb-12">
           <Link
             href="/projects"
