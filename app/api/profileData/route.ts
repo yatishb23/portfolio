@@ -1,21 +1,43 @@
 import { NextResponse } from "next/server";
+import { redis } from "@/lib/redis";
 
 export async function GET() {
-  const response = await fetch("https://api.codolio.com/profile?userKey=scrapper", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const cacheKey = "profileData";
+    const cachedData = await redis.get(cacheKey);
 
-  const data = await response.json();
+    if (cachedData) {
+      return NextResponse.json(JSON.parse(cachedData));
+    }
 
-  if (data.errors) {
+    const response = await fetch("https://api.codolio.com/profile?userKey=scrapper", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.errors) {
+      return NextResponse.json(
+        { error: data.errors[0].message },
+        { status: 500 }
+      );
+    }
+
+    const platformProfiles = data.data.platformProfiles;
+
+    await redis.set(cacheKey, JSON.stringify(platformProfiles), {
+      EX: 3600,
+    });
+
+    return NextResponse.json(platformProfiles);
+  } catch (error) {
+    console.error("API Error:", error);
     return NextResponse.json(
-      { error: data.errors[0].message },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
-
-  return NextResponse.json(data.data.platformProfiles);
 }
