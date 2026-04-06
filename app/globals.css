@@ -1,27 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-::-webkit-scrollbar{
-  display: none;
-}
-::root{
-  font-family: Inter Tight, Inter Tight Fallback;
-}
-@font-face {
-  font-family: 'ClashDisplay';
-  src: url('/fonts/ClashDisplay-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@import "tailwindcss";
-@import "tw-animate-css"; */
+/* ─────────────────────────────────────────────
+   FONTS
+───────────────────────────────────────────── */
+@layer base {
+  body {
+    @apply text-neutral-400 antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans), ui-monospace, "JetBrains Mono", "Fira Code",
+      SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+      monospace;
+  }
 
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, a, div, button, input, textarea {
+    font-family: inherit !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   CSS VARIABLES — Light
+───────────────────────────────────────────── */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -58,8 +65,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* ─────────────────────────────────────────────
+   CSS VARIABLES — Dark
+───────────────────────────────────────────── */
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #09090b;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -93,6 +103,9 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* ─────────────────────────────────────────────
+   THEME TOKENS (for Tailwind v4 @theme inline)
+───────────────────────────────────────────── */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -132,35 +145,146 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+/* ─────────────────────────────────────────────
+   BACKGROUND TEXTURE PATTERNS
+   Used as absolute overlays in page.tsx sections
+───────────────────────────────────────────── */
+
+/* Dot grid — hero background */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, #262626 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Tighter dots — light mode variant / general use */
+.bg-grid-dots {
+  background-image: radial-gradient(#222 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Light bg grid (light mode surfaces) */
+.bg-grid {
+  background-image: radial-gradient(#d4d4d4 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* Diagonal hatching — section divider strips & contact section */
+.bg-hatching {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    #111 2px,
+    #111 4px
+  );
+}
+
+/* Subtle diagonal hatch — used as absolute bg inside sections */
+.bg-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(0, 0, 0, 0.03) 8px,
+    rgba(0, 0, 0, 0.03) 9px
+  );
+}
+
+.dark .bg-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(255, 255, 255, 0.02) 8px,
+    rgba(255, 255, 255, 0.02) 9px
+  );
+}
+
+/* Ruled lines (horizontal + vertical) — experience / coding profiles */
+.bg-lines {
+  background-image:
+    linear-gradient(#111 1px, transparent 1px),
+    linear-gradient(90deg, #111 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Multi-layer geometry — leetcode / data-heavy sections */
+.bg-geometry {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 0, 0, 0.02) 10px,
+      rgba(0, 0, 0, 0.02) 11px
+    );
+  background-size: 20px 20px, 100% 40px, 40px 100%, 100% 100%;
+  background-repeat: repeat;
+}
+
+.dark .bg-geometry {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.01) 10px,
+      rgba(255, 255, 255, 0.01) 11px
+    );
+}
+
+/* ─────────────────────────────────────────────
+   SECTION DIVIDER (legacy utility)
+───────────────────────────────────────────── */
+.section-divider {
+  border-top: 1px solid #e5e5e5;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    #f5f5f5 10px,
+    #f5f5f5 20px
+  );
+}
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
-  body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@layer utilities {
-  .animate-fade-in-up {
-    animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+/* ─────────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  display: none;
 }
 
+/* ─────────────────────────────────────────────
+   CODE BLOCKS (blog / content pages)
+───────────────────────────────────────────── */
 .content pre code {
-  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -169,22 +293,22 @@
   display: block;
   color: #0f172a;
 }
-
 .dark .content code.hljs {
   color: #e2e8f0;
 }
 
+/* Comments */
 .content .hljs-comment,
 .content .hljs-quote {
   color: #64748b;
   font-style: italic;
 }
-
 .dark .content .hljs-comment,
 .dark .content .hljs-quote {
   color: #94a3b8;
 }
 
+/* Keywords */
 .content .hljs-keyword,
 .content .hljs-selector-tag,
 .content .hljs-literal,
@@ -195,7 +319,6 @@
   color: #2563eb;
   font-weight: 600;
 }
-
 .dark .content .hljs-keyword,
 .dark .content .hljs-selector-tag,
 .dark .content .hljs-literal,
@@ -206,6 +329,7 @@
   color: #7dd3fc;
 }
 
+/* Strings / numbers */
 .content .hljs-string,
 .content .hljs-attr,
 .content .hljs-attribute,
@@ -214,7 +338,6 @@
 .content .hljs-link {
   color: #16a34a;
 }
-
 .dark .content .hljs-string,
 .dark .content .hljs-attr,
 .dark .content .hljs-attribute,
@@ -224,6 +347,7 @@
   color: #86efac;
 }
 
+/* Variables / functions */
 .content .hljs-variable,
 .content .hljs-template-variable,
 .content .hljs-class .hljs-title,
@@ -232,7 +356,6 @@
 .content .hljs-title.function_ {
   color: #7c3aed;
 }
-
 .dark .content .hljs-variable,
 .dark .content .hljs-template-variable,
 .dark .content .hljs-class .hljs-title,
@@ -242,14 +365,62 @@
   color: #c4b5fd;
 }
 
+/* Meta / symbols */
 .content .hljs-meta,
 .content .hljs-symbol,
 .content .hljs-bullet {
   color: #f59e0b;
 }
-
 .dark .content .hljs-meta,
 .dark .content .hljs-symbol,
 .dark .content .hljs-bullet {
   color: #fbbf24;
+}
+
+
+
+@layer components {
+  :root {
+    --color-edge: rgba(161,161,170,0.3);
+    --color-border: rgba(161,161,170,0.2);
+    --pattern-foreground: color-mix(in oklab, #a1a1aa 60%, transparent);
+  }
+
+  .dark {
+    --color-edge: rgba(63,63,70,0.6);
+    --color-border: rgba(63,63,70,0.4);
+    --pattern-foreground: color-mix(in oklab, #52525b 60%, transparent);
+  }
+
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+    line-height: 1.4;
+  }
+
+  .stripe-divider {
+    @apply relative h-6 w-full border-x border-[var(--color-edge)] opacity-50;
+  }
+
+  .stripe-divider::before {
+    content: '';
+    @apply absolute -left-[100vw] top-0 h-6 w-[200vw] z-[-1];
+    background-image: repeating-linear-gradient(315deg, var(--pattern-foreground) 0, var(--pattern-foreground) 1px, transparent 0, transparent 50%);
+    background-size: 10px 10px;
+  }
+
+  .panel {
+    @apply relative border-x border-[var(--color-edge)];
+  }
+
+  .screen-line-after::after, .screen-line-before::before {
+    content: '';
+    @apply absolute left-[-100vw] h-[1px] w-[200vw] bg-[var(--color-edge)];
+  }
+  
+  .screen-line-after::after { @apply bottom-0; }
+  .screen-line-before::before { @apply top-0; }
+
+  .connect-btn {
+    @apply inline-flex items-center gap-2 h-9 px-3 rounded-xl border border-zinc-200 bg-white text-xs font-medium text-zinc-900 transition-all hover:bg-zinc-50 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800;
+  }
 }

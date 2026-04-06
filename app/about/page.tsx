@@ -16,10 +16,10 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-white dark:bg-neutral-950">
-      <div className="max-w-4xl mx-auto px-6">
+    <div className="min-h-screen pt-32 pb-20 bg-geometry">
+      <div className="max-w-4xl mx-auto border-x border-geometry bg-white/50 dark:bg-neutral-950/50 min-h-screen relative z-10">
         {/* Heading Section */}
-        <div className="mb-20">
+        <div className="px-6 sm:px-8 lg:px-12 py-20 border-b border-geometry">
           <Link
             href="/"
             className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors mb-10"
@@ -42,14 +42,14 @@ const About = () => {
           </div>
         </div>
 
-        <div className="grid gap-20">
+        <div className="grid">
           {/* Skills Section */}
           <motion.section
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="p-10 md:p-16 rounded-[3rem] bg-neutral-50 dark:bg-neutral-900/30 border border-neutral-100 dark:border-neutral-900 shadow-sm"
+            className="px-6 sm:px-8 lg:px-12 py-20 border-b border-geometry"
           >
             <div className="space-y-12">
               <div className="flex items-center gap-4">
@@ -85,29 +85,30 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="grid lg:grid-cols-12 gap-12"
+            className="px-6 sm:px-8 lg:px-12 py-20 border-b border-geometry bg-hatch overflow-hidden"
           >
-            <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-4">
-              <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50">Leadership</h2>
-              <p className="text-neutral-500 dark:text-neutral-400 font-medium">Community engagement and team leadership roles.</p>
-            </div>
+            <div className="grid lg:grid-cols-12 gap-12">
+              <div className="lg:col-span-4 h-fit space-y-4">
+                <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50">Leadership</h2>
+                <p className="text-neutral-500 dark:text-neutral-400 font-medium">Community engagement and team leadership roles.</p>
+              </div>
 
-            <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4">
-              {[
-                { title: "Deputy Marketing Head", desc: "GECA MUN Club" },
-                {
-                  title: "Organizing Team Member",
-                  desc: "GMC Conference (National)",
-                },
-                {
-                  title: "GDSC Member",
-                  desc: "Google Developer Student Clubs",
-                },
-                {
-                  title: "Workshop Organizer",
-                  desc: "Cloud Study Jam & GenAI Workshop",
-                },
-              ].map((role, i) => (
+              <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4">
+                {[
+                  { title: "Deputy Marketing Head", desc: "GECA MUN Club" },
+                  {
+                    title: "Organizing Team Member",
+                    desc: "GMC Conference (National)",
+                  },
+                  {
+                    title: "GDSC Member",
+                    desc: "Google Developer Student Clubs",
+                  },
+                  {
+                    title: "Workshop Organizer",
+                    desc: "Cloud Study Jam & GenAI Workshop",
+                  },
+                ].map((role, i) => (
                 <div key={i} className="p-8 rounded-[2rem] bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 shadow-sm group hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all">
                    <div className="w-10 h-10 rounded-2xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                       <span className="text-xs font-black text-neutral-950 dark:text-neutral-50">{i + 1}</span>

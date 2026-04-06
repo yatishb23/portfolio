@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+
+// Internal Components
 import TechSkills from "@/components/Sections/LandingPages/Skills";
 import Profiles from "@/components/Sections/Coding_Section/Profiles";
 import Experience from "@/components/Sections/LandingPages/Experience";
@@ -9,15 +11,36 @@ import Collab from "@/components/Sections/LandingPages/Contact";
 import Footer from "@/components/Sections/LandingPages/Footer";
 import Thoughts from "@/components/Sections/LandingPages/Thoughts";
 import LeetCodeHeatmap from "@/components/Heatmap";
+import { SectionPanel } from "@/components/SectionPanel";
+// --- Sub-Components for Cleanliness ---
+
+const CornerCross = ({ position }: { position: string }) => (
+  <div
+    className={`corner-cross absolute w-3 h-3 flex items-center justify-center ${position} translate-x-[-50%] translate-y-[-50%]`}
+  >
+    <div className="absolute h-[1px] w-full bg-zinc-300 dark:bg-zinc-700" />
+    <div className="absolute w-[1px] h-full bg-zinc-300 dark:bg-zinc-700" />
+  </div>
+);
 
 export default function Home() {
-  const [isDark] = useState(true);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
+    // Force Dark Mode based on your original logic
+    document.documentElement.classList.add("dark");
+    const trackVisitor = async () => {
+      try {
+        const res = await fetch("/api/stats");
+        const data = await res.json();
+        setCount(data.uniqueVisitors);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    trackVisitor();
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -26,7 +49,7 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.3, rootMargin: "0px 0px -20% 0px" },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
     );
 
     sectionsRef.current.forEach((section) => {
@@ -37,175 +60,205 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-200 dark:selection:bg-neutral-800">
-      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-        <header
-          id="intro"
-          ref={(el) => {
-            sectionsRef.current[0] = el;
+    <>
+      {/* ── Top Decorative Banner ── */}
+      <div className="border-x border-[var(--color-edge)] screen-line-before screen-line-after relative py-5">
+        <CornerCross position="top-0 left-0" />
+        <CornerCross position="top-0 right-0" />
+        <div
+          className="h-[70px] w-full opacity-20"
+          style={{
+            background:
+              "radial-gradient(var(--pattern-foreground) 1px, transparent 0)",
+            backgroundSize: "10px 10px",
           }}
-          className="min-h-screen flex items-center opacity-0 py-20"
-        >
-          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-            <div className="lg:col-span-3 space-y-8">
-              <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-200/50 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-700 text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-                  <span className="w-1 h-1 rounded-full bg-neutral-400 animate-pulse" />
-                  Portfolio / 2026 Edition
-                </div>
-                
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-neutral-200 to-neutral-300 dark:from-neutral-800 dark:to-neutral-700 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-                    <Image
-                      src="/yatish2.png"
-                      alt="Yatish Badgujar"
-                      width={128}
-                      height={128}
-                      className="relative w-32 h-32 object-cover rounded-2xl border-2 border-white dark:border-neutral-900 shadow-xl transition-all duration-500"
-                    />
-                  </div>
-                  <div>
-                    <h1 className="text-6xl sm:text-7xl font-black tracking-tighter leading-none">
-                      Yatish
-                      <br />
-                      <span className="text-neutral-400 dark:text-neutral-600">Badgujar</span>
-                    </h1>
-                  </div>
-                </div>
-              </div>
+        />
+      </div>
 
-              <div className="space-y-6 max-w-lg">
-                <p className="text-xl sm:text-2xl text-neutral-600 dark:text-neutral-400 leading-tight font-medium">
-                  Frontend Developer crafting high-fidelity digital experiences at the intersection of
-                  <span className="text-neutral-900 dark:text-neutral-100"> design</span>,
-                  <span className="text-neutral-900 dark:text-neutral-100"> engineering</span>, and
-                  <span className="text-neutral-900 dark:text-neutral-100"> user delight</span>.
-                </p>
+      {/* ── Hero / Profile ── */}
+      <div className="flex border-x border-[var(--color-edge)] relative screen-line-after py-8 px-6">
+        <div className="w-[120px] shrink-0">
+          <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 p-1.5 bg-white dark:bg-white transition-all">
+            <Image
+              src="/yatish2.png"
+              alt="Yatish Badgujar"
+              width={100}
+              height={100}
+              priority
+              className="w-full h-auto rounded-xl object-cover block"
+            />
+          </div>
+        </div>
 
-                <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-neutral-400">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse" />
-                    Available for projects
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="opacity-50">Based in</span>
-                    <span className="text-neutral-600 dark:text-neutral-300">Maharashtra, India</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2 flex flex-col justify-end gap-10 mt-8 lg:mt-0">
-              <div className="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-4">
-                  Current Status
-                </div>
-                <div className="space-y-3">
-                  <div className="text-sm font-bold text-neutral-800 dark:text-neutral-200 leading-snug">
-                    Final Year Engineering Student @ GCOEC
-                  </div>
-                  <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                    Graduate Trainee Engineer @ Pratiti Technologies
-                  </div>
-                  <div className="pt-2 flex items-center gap-2">
-                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 rounded text-neutral-400">2022 — Present</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 ml-1">
-                  Primary Stack
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {["Next.js", "React", "TypeScript", "Java", "Node.js"].map(
-                    (skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 text-[11px] font-bold border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-full text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 cursor-default"
-                      >
-                        {skill}
-                      </span>
-                    ),
-                  )}
-                </div>
-              </div>
+        <div className="flex-1 flex flex-col justify-center pl-8">
+          <div className="flex items-center justify-between text-zinc-500 mb-2">
+            <svg
+              className="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a10 10 0 0 1 0 20" />
+            </svg>
+            <div className="flex items-center gap-2 text-xs font-mono">
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <span>
+                {count !== null ? count.toLocaleString() : "Loading..."}
+              </span>
             </div>
           </div>
-        </header>
 
-        <section
-          id="work"
-          ref={(el) => {
-            sectionsRef.current[1] = el;
-          }}
-          className="min-h-screen py-24 opacity-0"
-        >
-          <Experience/>
-        </section>
-
-        <section
-          id="skills"
-          ref={(el) => {
-            sectionsRef.current[2] = el;
-          }}
-          className="py-24 opacity-0"
-        > 
-          {/* <div className="p-8 sm:p-12 rounded-[2.5rem] bg-neutral-900 dark:bg-neutral-950 text-white shadow-2xl shadow-neutral-500/10"> */}
-            <TechSkills />
-          {/* </div> */}
-        </section>
-
-
-        <section
-          id="coding"
-          ref={(el) => {
-            sectionsRef.current[6] = el;
-          }}
-          className="py-24 opacity-0"
-        > 
-          <div className="space-y-1">
-            <h2 className="text-4xl font-black tracking-tighter text-neutral-900 dark:text-neutral-100">LeetCode Activity</h2>
-            <p className="text-neutral-500 dark:text-neutral-400 font-medium font-sans pb-14 pt-4">
-              A visual representation of my problem-solving journey on LeetCode, showcasing consistency and dedication to honing my coding skills.
-            </p>
+          <div className="flex items-center gap-2 mb-1.5">
+            <h1 className="text-3xl font-mono tracking-tight text-neutral-900 dark:text-neutral-100">
+              Yatish Badgujar
+            </h1>
+            <svg
+              className="w-5 h-5 text-blue-500"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M9 11.3l2.8 2.7L19.6 6.2 21 7.6l-9.2 9.4L7.6 12.7z"></path>
+              <path
+                d="M12 22.8c-5.9 0-10.8-4.9-10.8-10.8S6.1 1.2 12 1.2s10.8 4.9 10.8 10.8-4.9 10.8-10.8 10.8zm0-19.6c-4.8 0-8.8 3.9-8.8 8.8s3.9 8.8 8.8 8.8 8.8-3.9 8.8-8.8-3.9-8.8-8.8-8.8z"
+                opacity=".2"
+              ></path>
+              <circle cx="12" cy="12" r="9.3"></circle>
+              <path
+                fill="#fff"
+                d="M9.8 16.7l-4-4.1 1.4-1.4 2.6 2.7 7.4-7.4 1.4 1.4-8.8 8.8z"
+              ></path>
+            </svg>
           </div>
-          <LeetCodeHeatmap username="yatish_23" />
-        </section>  
-        <section
-          id="coding"
-          ref={(el) => {
-            sectionsRef.current[5] = el;
-          }}
-          className="py-24 opacity-0"
-        > 
-          <Profiles/>
-        </section>
 
-        <section
-          id="thoughts"
-          ref={(el) => {
-            sectionsRef.current[3] = el;
-          }}
-          className="py-24 opacity-0"
-        >
-          <Thoughts/>
-        </section>
+          <p className="text-sm font-mono text-zinc-500 mb-2">
+            Always Learning
+          </p>
+          <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-500">
+            <span className="w-2 h-2 rounded-full bg-zinc-500" />
+            <span>Idle · Currently sleeping</span>
+          </div>
+        </div>
+      </div>
 
-        <section
-          id="connect"
-          ref={(el) => {
-            sectionsRef.current[4] = el;
-          }}
-          className="py-24 border-t border-neutral-200 dark:border-neutral-800"
-        >
-          <Collab/>
-        </section>
+      <div className="stripe-divider" />
 
-        <Footer/>
-      </main>
-      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-neutral-50 dark:from-[#0a0a0a] via-transparent to-transparent pointer-events-none z-50"></div>
-    </div>
+      {/* ── Sections ── */}
+
+      <SectionPanel
+        id="about"
+        title="About"
+        sectionRef={(el: any) => (sectionsRef.current[0] = el)}
+      >
+        <ul className="list-disc pl-5 flex flex-col gap-2 text-base leading-relaxed">
+          <li>
+            Frontend developer crafting high-fidelity digital experiences at the
+            intersection of design and engineering.
+          </li>
+          <li>
+            Curious about how visual systems shape the way people engage with
+            software.
+          </li>
+          <li>
+            Focused on building intentional, disciplined, and beautiful software
+            products.
+          </li>
+        </ul>
+      </SectionPanel>
+
+      <div className="stripe-divider" />
+
+      <SectionPanel
+        id="connect"
+        title="Connect"
+        sectionRef={(el: any) => (sectionsRef.current[4] = el)}
+      >
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href="https://github.com/yatish-badgujar"
+            target="_blank"
+            className="connect-btn"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com/in/yatish-badgujar"
+            target="_blank"
+            className="connect-btn"
+          >
+            LinkedIn
+          </a>
+          <a href="mailto:yatish@example.com" className="connect-btn">
+            Mail
+          </a>
+          <a href="/resume.pdf" target="_blank" className="connect-btn">
+            Resume
+          </a>
+        </div>
+      </SectionPanel>
+
+      <div className="stripe-divider" />
+
+      <section
+        className="panel screen-line-before screen-line-after"
+        ref={(el) => {
+          sectionsRef.current[1] = el;
+        }}
+      >
+        <div className="p-4">
+          <Experience />
+        </div>
+      </section>
+
+      <div className="stripe-divider" />
+
+      <SectionPanel
+        id="leetcode"
+        title="LeetCode"
+        sectionRef={(el: any) => (sectionsRef.current[6] = el)}
+      >
+        <p className="text-sm text-zinc-500 mb-4">
+          Problem-solving journey and consistency heatmap.
+        </p>
+        <LeetCodeHeatmap username="yatish_23" />
+      </SectionPanel>
+
+      <div className="stripe-divider" />
+
+      <SectionPanel
+        id="thoughts"
+        title="Thoughts"
+        sectionRef={(el: any) => (sectionsRef.current[3] = el)}
+      >
+        <Thoughts />
+      </SectionPanel>
+
+      <div className="stripe-divider" />
+
+      {/* ── Quote block ── */}
+      <div className="quote-section flex flex-col items-center py-12 px-6 text-center border-x border-[var(--color-edge)] relative screen-line-before screen-line-after">
+        <blockquote className="max-w-2xl text-xl font-light italic text-zinc-500 leading-snug mb-6">
+          "Design is not just what it looks like and feels like. Design is how
+          it works."
+        </blockquote>
+        <div className="flex items-center gap-3">
+          <div className="h-[1px] w-8 bg-zinc-300 dark:bg-zinc-700" />
+          <span className="text-[12px] font-normal tracking-widest uppercase text-zinc-400">
+            Steve Jobs
+          </span>
+          <div className="h-[1px] w-8 bg-zinc-300 dark:bg-zinc-700" />
+        </div>
+      </div>
+    </>
   );
 }

@@ -1,18 +1,23 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useScroll, useMotionValueEvent, motion, AnimatePresence } from 'framer-motion';
-import { HiMenu, HiX } from 'react-icons/hi';
-import DesktopNav from './DesktopNav';
-import MobileNav from './MobileNav';
-import ModeToggle from '../theme/theme-toggle';
+import React, { useState } from "react";
+import {
+  useScroll,
+  useMotionValueEvent,
+  motion,
+  AnimatePresence,
+} from "framer-motion";
+import { HiMenu, HiX } from "react-icons/hi";
+import DesktopNav from "./DesktopNav";
+import MobileNav from "./MobileNav";
+import ModeToggle from "../theme/theme-toggle";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, 'change', (currentY) => {
+  useMotionValueEvent(scrollY, "change", (currentY) => {
     setScrolled(currentY > 50);
   });
 
@@ -21,15 +26,10 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed inset-x-0 top-0 sm:top-6 z-50 mx-auto w-full sm:max-w-2xl lg:max-w-4xl transition-all duration-500`}
+      className={`fixed inset-x-0 top-0 z-50 mx-auto w-full transition-all duration-500 border-b border-[var(--color-edge)] bg-neutral-50 dark:bg-[#09090b]`}
     >
-      <div 
-        className={`flex items-center justify-between gap-8 px-6 py-4 sm:py-2 transition-all duration-500 shadow-sm w-full
-          ${scrolled 
-            ? 'bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b sm:border border-neutral-200 dark:border-neutral-800 shadow-lg' 
-            : 'bg-neutral-50/50 dark:bg-neutral-950/50 backdrop-blur-sm border-b sm:border border-transparent'
-          }
-          rounded-none sm:rounded-2xl
+      <div
+        className={`flex items-center justify-between gap-8 px-6 py-4 sm:py-2 transition-all duration-500 w-full mx-auto md:max-w-3xl border-x border-[var(--color-edge)] bg-neutral-50 dark:bg-[#09090b] font-light
         `}
       >
         {/* Desktop Navbar */}
@@ -41,16 +41,18 @@ export default function Navbar() {
 
         {/* Mobile Header (Brand/Theme toggle always visible) */}
         <div className="sm:hidden flex items-center justify-between w-full">
-           <div className="text-sm font-black tracking-tighter text-neutral-900 dark:text-neutral-100 uppercase">YB.</div>
-           <div className="flex items-center gap-2">
-             <ModeToggle variant="polygon" start="center" />
-             <button
-               className="p-2 text-2xl text-neutral-900 dark:text-neutral-100 rounded-xl hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 transition-colors"
-               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-             >
-               {mobileMenuOpen ? <HiX /> : <HiMenu />}
-             </button>
-           </div>
+          <div className="text-sm font-normal tracking-tighter text-neutral-900 dark:text-neutral-100 uppercase">
+            YB.
+          </div>
+          <div className="flex items-center gap-2">
+            <ModeToggle variant="polygon" start="center" />
+            <button
+              className="p-2 text-2xl text-neutral-900 dark:text-neutral-100 rounded-xl hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <HiX /> : <HiMenu />}
+            </button>
+          </div>
         </div>
       </div>
 
