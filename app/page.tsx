@@ -268,6 +268,18 @@ export default function Home() {
         num="06"
         sectionRef={(el) => (sectionsRef.current[3] = el)}
       >
+        <Profiles/>
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── Thoughts ── */}
+      <Section
+        id="thoughts"
+        label="Thoughts"
+        num="06"
+        sectionRef={(el) => (sectionsRef.current[3] = el)}
+      >
         <Thoughts />
       </Section>
 
