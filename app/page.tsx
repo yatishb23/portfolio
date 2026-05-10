@@ -5,207 +5,304 @@ import Image from "next/image";
 import TechSkills from "@/components/Sections/LandingPages/Skills";
 import Profiles from "@/components/Sections/Coding_Section/Profiles";
 import Experience from "@/components/Sections/LandingPages/Experience";
-import Collab from "@/components/Sections/LandingPages/Contact";
-import Footer from "@/components/Sections/LandingPages/Footer";
 import Thoughts from "@/components/Sections/LandingPages/Thoughts";
 import LeetCodeHeatmap from "@/components/Heatmap";
+import { SectionPanel } from "@/components/SectionPanel";
+
+/* ── Corner cross mark ── */
+const Cross = ({ pos }: { pos: string }) => (
+  <div className={`absolute w-3 h-3 ${pos} -translate-x-1/2 -translate-y-1/2`}>
+    <div className="absolute h-px w-full bg-zinc-700" />
+    <div className="absolute w-px h-full bg-zinc-700" />
+  </div>
+);
+
+/* ── Section wrapper ── */
+const Section = ({
+  id,
+  label,
+  num,
+  children,
+  sectionRef,
+}: {
+  id: string;
+  label: string;
+  num: string;
+  children: React.ReactNode;
+  sectionRef?: (el: HTMLElement | null) => void;
+}) => (
+  <section
+    id={id}
+    ref={sectionRef}
+    className="panel screen-line-before screen-line-after px-7 py-7"
+  >
+    {/* header */}
+    <div className="flex items-center gap-3 mb-5">
+      <span className="section-label">{label}</span>
+      <div className="flex-1 h-px bg-zinc-800" />
+      <span className="text-[9px] text-zinc-600 tracking-widest font-mono">
+        {num}
+      </span>
+    </div>
+    {children}
+  </section>
+);
 
 export default function Home() {
-  const [isDark] = useState(true);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
+    const trackVisitor = async () => {
+      try {
+        const res = await fetch("/api/stats");
+        const data = await res.json();
+        setCount(data.uniqueVisitors);
+      } catch {}
+    };
+    trackVisitor();
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
-          }
-        });
-      },
-      { threshold: 0.3, rootMargin: "0px 0px -20% 0px" },
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("animate-fade-in-up");
+        }),
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     );
-
-    sectionsRef.current.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
+    sectionsRef.current.forEach((s) => s && observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-200 dark:selection:bg-neutral-800">
-      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-        <header
-          id="intro"
-          ref={(el) => {
-            sectionsRef.current[0] = el;
+    <>
+      {/* ── Top dot banner ── */}
+      <div className="panel screen-line-before screen-line-after relative py-5">
+        <Cross pos="top-0 left-0" />
+        <Cross pos="top-0 right-0" />
+        <div
+          className="h-[60px] w-full opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, #fff 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
           }}
-          className="min-h-screen flex items-center opacity-0 py-20"
-        >
-          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-            <div className="lg:col-span-3 space-y-8">
-              <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-200/50 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-700 text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-                  <span className="w-1 h-1 rounded-full bg-neutral-400 animate-pulse" />
-                  Portfolio / 2026 Edition
-                </div>
-                
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-neutral-200 to-neutral-300 dark:from-neutral-800 dark:to-neutral-700 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-                    <Image
-                      src="/yatish2.png"
-                      alt="Yatish Badgujar"
-                      width={128}
-                      height={128}
-                      className="relative w-32 h-32 object-cover rounded-2xl border-2 border-white dark:border-neutral-900 shadow-xl transition-all duration-500"
-                    />
-                  </div>
-                  <div>
-                    <h1 className="text-6xl sm:text-7xl font-black tracking-tighter leading-none">
-                      Yatish
-                      <br />
-                      <span className="text-neutral-400 dark:text-neutral-600">Badgujar</span>
-                    </h1>
-                  </div>
-                </div>
-              </div>
+        />
+        <span className="absolute bottom-6 right-6 text-[9px] tracking-[0.18em] uppercase text-zinc-700 font-mono">
+          v2025.1 · portfolio
+        </span>
+      </div>
 
-              <div className="space-y-6 max-w-lg">
-                <p className="text-xl sm:text-2xl text-neutral-600 dark:text-neutral-400 leading-tight font-medium">
-                  Frontend Developer crafting high-fidelity digital experiences at the intersection of
-                  <span className="text-neutral-900 dark:text-neutral-100"> design</span>,
-                  <span className="text-neutral-900 dark:text-neutral-100"> engineering</span>, and
-                  <span className="text-neutral-900 dark:text-neutral-100"> user delight</span>.
-                </p>
+      <div className="stripe-divider" />
 
-                <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-neutral-400">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse" />
-                    Available for projects
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="opacity-50">Based in</span>
-                    <span className="text-neutral-600 dark:text-neutral-300">Maharashtra, India</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* ── Hero ── */}
+      <div className="panel screen-line-after relative grid grid-cols-[auto_1fr] px-7 py-8">
+        {/* Avatar */}
+        <div className="w-24 h-24 rounded-2xl border border-zinc-700 overflow-hidden bg-zinc-900 flex items-center justify-center shrink-0">
+          <Image
+            src="/yatish2.png"
+            alt="Yatish Badgujar"
+            width={96}
+            height={96}
+            priority
+            className="w-full h-auto object-cover"
+          />
+        </div>
 
-            <div className="lg:col-span-2 flex flex-col justify-end gap-10 mt-8 lg:mt-0">
-              <div className="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-4">
-                  Current Status
-                </div>
-                <div className="space-y-3">
-                  <div className="text-sm font-bold text-neutral-800 dark:text-neutral-200 leading-snug">
-                    Final Year Engineering Student @ GCOEC
-                  </div>
-                  <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                    Graduate Trainee Engineer @ Pratiti Technologies
-                  </div>
-                  <div className="pt-2 flex items-center gap-2">
-                    <span className="text-[10px] bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 rounded text-neutral-400">2022 — Present</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 ml-1">
-                  Primary Stack
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {["Next.js", "React", "TypeScript", "Java", "Node.js"].map(
-                    (skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 text-[11px] font-bold border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-full text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 cursor-default"
-                      >
-                        {skill}
-                      </span>
-                    ),
-                  )}
-                </div>
-              </div>
+        {/* Info */}
+        <div className="pl-7 flex flex-col justify-center">
+          {/* top row */}
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-zinc-600 text-sm">◎</span>
+            <div className="flex items-center gap-2 font-mono text-[10px] text-zinc-600">
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
+              <span>
+                {count !== null ? count.toLocaleString() : "——"} visitors
+              </span>
             </div>
           </div>
-        </header>
 
-        <section
-          id="work"
-          ref={(el) => {
-            sectionsRef.current[1] = el;
-          }}
-          className="min-h-screen py-24 opacity-0"
-        >
-          <Experience/>
-        </section>
-
-        <section
-          id="skills"
-          ref={(el) => {
-            sectionsRef.current[2] = el;
-          }}
-          className="py-24 opacity-0"
-        > 
-          {/* <div className="p-8 sm:p-12 rounded-[2.5rem] bg-neutral-900 dark:bg-neutral-950 text-white shadow-2xl shadow-neutral-500/10"> */}
-            <TechSkills />
-          {/* </div> */}
-        </section>
-
-
-        <section
-          id="coding"
-          ref={(el) => {
-            sectionsRef.current[6] = el;
-          }}
-          className="py-24 opacity-0"
-        > 
-          <div className="space-y-1">
-            <h2 className="text-4xl font-black tracking-tighter text-neutral-900 dark:text-neutral-100">LeetCode Activity</h2>
-            <p className="text-neutral-500 dark:text-neutral-400 font-medium font-sans pb-14 pt-4">
-              A visual representation of my problem-solving journey on LeetCode, showcasing consistency and dedication to honing my coding skills.
-            </p>
+          {/* name + badge */}
+          <div className="flex items-center gap-2.5 mb-1.5">
+            <h1 className="text-[22px] font-mono font-medium tracking-[-0.04em] text-zinc-100 leading-none">
+              Yatish Badgujar
+            </h1>
+            {/* verified */}
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 shrink-0">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9.5 12.5l2 2 4-4"
+                  stroke="white"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
           </div>
-          <LeetCodeHeatmap username="yatish_23" />
-        </section>  
-        <section
-          id="coding"
-          ref={(el) => {
-            sectionsRef.current[5] = el;
-          }}
-          className="py-24 opacity-0"
-        > 
-          <Profiles/>
-        </section>
 
-        <section
-          id="thoughts"
-          ref={(el) => {
-            sectionsRef.current[3] = el;
-          }}
-          className="py-24 opacity-0"
+          {/* role */}
+          <p className="text-[11px] font-mono text-zinc-600 uppercase tracking-[0.1em] mb-3">
+            Frontend Engineer · Design Systems
+          </p>
+
+          {/* status */}
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0" />
+            <span className="text-[11px] font-mono text-zinc-600">
+              Idle · Currently sleeping
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="stripe-divider" />
+
+      {/* ── About ── */}
+      <Section
+        id="about"
+        label="About"
+        num="01"
+        sectionRef={(el) => (sectionsRef.current[0] = el)}
+      >
+        <ul className="flex flex-col gap-3.5">
+          {[
+            "Frontend developer crafting high-fidelity digital experiences at the intersection of design and engineering.",
+            "Curious about how visual systems shape the way people engage with software — performance and aesthetics as one.",
+            "Focused on building intentional, disciplined, and beautiful software products that respect the user's attention.",
+          ].map((text, i) => (
+            <li key={i} className="flex gap-3.5 items-start">
+              <span className="text-zinc-700 font-mono text-[11px] mt-0.5 shrink-0">
+                →
+              </span>
+              <span className="text-[13px] text-zinc-400 leading-relaxed">
+                {text}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── Connect ── */}
+      <Section
+        id="connect"
+        label="Connect"
+        num="02"
+        sectionRef={(el) => (sectionsRef.current[4] = el)}
+      >
+        <div className="flex flex-wrap gap-2">
+          {[
+            {
+              prefix: "gh/",
+              label: "GitHub",
+              href: "https://github.com/yatish-badgujar",
+            },
+            {
+              prefix: "in/",
+              label: "LinkedIn",
+              href: "https://linkedin.com/in/yatish-badgujar",
+            },
+            { prefix: "@", label: "Email", href: "mailto:yatish@example.com" },
+            { prefix: "↓", label: "Resume", href: "/resume.pdf" },
+          ].map(({ prefix, label, href }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="connect-btn"
+            >
+              <span className="btn-prefix">{prefix}</span>
+              {label}
+            </a>
+          ))}
+        </div>
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── Experience ── */}
+      <Section
+        id="experience"
+        label="Experience"
+        num="03"
+        sectionRef={(el) => (sectionsRef.current[1] = el)}
+      >
+        <Experience />
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── Stack ── */}
+      <Section
+        id="stack"
+        label="Stack"
+        num="04"
+        sectionRef={(el) => (sectionsRef.current[5] = el)}
+      >
+        <TechSkills />
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── LeetCode ── */}
+      <Section
+        id="leetcode"
+        label="LeetCode"
+        num="05"
+        sectionRef={(el) => (sectionsRef.current[6] = el)}
+      >
+        <p className="text-[12px] text-zinc-600 mb-5 font-mono">
+          Problem-solving journey and consistency heatmap.
+        </p>
+        <LeetCodeHeatmap username="yatish_23" />
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── Thoughts ── */}
+      <Section
+        id="thoughts"
+        label="Thoughts"
+        num="06"
+        sectionRef={(el) => (sectionsRef.current[3] = el)}
+      >
+        <Thoughts />
+      </Section>
+
+      <div className="stripe-divider" />
+
+      {/* ── Quote ── */}
+      <div className="panel screen-line-before screen-line-after relative flex flex-col items-center py-14 px-8 text-center">
+        <span
+          className="text-5xl text-zinc-800 font-serif leading-none mb-5"
+          aria-hidden="true"
         >
-          <Thoughts/>
-        </section>
+          "
+        </span>
+        <blockquote className="max-w-xl text-[14px] font-light italic text-zinc-500 leading-[1.8] mb-6">
+          Design is not just what it looks like and feels like. Design is how it
+          works.
+        </blockquote>
+        <div className="flex items-center gap-3">
+          <div className="h-px w-6 bg-zinc-700" />
+          <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-600">
+            Steve Jobs
+          </span>
+          <div className="h-px w-6 bg-zinc-700" />
+        </div>
+      </div>
 
-        <section
-          id="connect"
-          ref={(el) => {
-            sectionsRef.current[4] = el;
-          }}
-          className="py-24 border-t border-neutral-200 dark:border-neutral-800"
-        >
-          <Collab/>
-        </section>
+      <div className="stripe-divider" />
 
-        <Footer/>
-      </main>
-      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-neutral-50 dark:from-[#0a0a0a] via-transparent to-transparent pointer-events-none z-50"></div>
-    </div>
+      {/* ── Footer strip ── */}
+      <div className="panel screen-line-before relative flex items-center justify-between px-7 py-4">
+        <span className="font-mono text-[10px] text-zinc-700 tracking-[0.15em]">
+          YB · 2025
+        </span>
+        <span className="font-mono text-[10px] text-zinc-700">Pune, IN</span>
+      </div>
+    </>
   );
 }
