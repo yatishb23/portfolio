@@ -8,63 +8,71 @@ const QuestionStats: React.FC<QuestionStatsProps> = ({ platforms = [] }) => {
   const totalSolved = platforms.reduce(
     (sum, platform) =>
       sum + (platform.totalQuestionStats?.totalQuestionCounts || 0),
-    0
+    0,
   );
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="space-y-12 p-8 sm:p-12 rounded-[3rem] border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/50 shadow-xl dark:shadow-2xl shadow-neutral-500/5"
+      className="space-y-8"
     >
       {/* Header */}
-      <div className="flex flex-col items-center justify-center py-4 border-b border-neutral-200 dark:border-neutral-800">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2">
+      <div className="flex flex-col items-start justify-center pb-6 border-b border-zinc-800">
+        <h3 className="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-600 mb-2">
           Total Problems Solved
         </h3>
-        <p className="text-6xl font-black text-neutral-900 dark:text-neutral-100">
+        <p className="font-mono text-5xl font-medium tracking-[-0.04em] text-zinc-100">
           {totalSolved}
         </p>
       </div>
 
       {/* Grid of platforms */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {platforms.map((platform) => (
           <motion.div
             key={platform.platform}
-            whileHover={{ y: -4 }}
-            className="p-5 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-white dark:bg-neutral-950 shadow-sm hover:shadow-md transition-all duration-300"
+            whileHover={{ y: -2 }}
+            className="p-5 border border-zinc-800 rounded-[4px] bg-transparent hover:border-zinc-600 transition-all duration-300"
           >
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-lg bg-neutral-100 dark:bg-neutral-900 ring-1 ring-neutral-200 dark:ring-neutral-800">
-                  <PlatformIcon platform={platform.platform} className="w-6 h-6" />
+                <div className="p-2 rounded-[3px] border border-zinc-800 text-zinc-400">
+                  <PlatformIcon
+                    platform={platform.platform}
+                    className="w-4 h-4"
+                  />
                 </div>
-                <h4 className="font-bold text-lg text-neutral-800 dark:text-neutral-200 capitalize">
+                <h4 className="font-mono text-[12px] font-medium tracking-[0.05em] text-zinc-200 capitalize">
                   {platform.platform}
                 </h4>
               </div>
-              <span className="text-3xl font-black text-neutral-900 dark:text-neutral-100">
+              <span className="font-mono text-[14px] text-zinc-300">
                 {platform.totalQuestionStats?.totalQuestionCounts || 0}
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 pt-4 border-t border-neutral-100 dark:border-neutral-900">
+            <div className="grid grid-cols-3 gap-2 pt-4 border-t border-zinc-800/50">
               {(["easy", "medium", "hard"] as const).map((difficulty) => {
                 const counts = {
                   easy: platform.totalQuestionStats?.easyQuestionCounts ?? 0,
-                  medium: platform.totalQuestionStats?.mediumQuestionCounts ?? 0,
+                  medium:
+                    platform.totalQuestionStats?.mediumQuestionCounts ?? 0,
                   hard: platform.totalQuestionStats?.hardQuestionCounts ?? 0,
                 };
                 const colors = {
-                  easy: "text-emerald-600 dark:text-emerald-400",
-                  medium: "text-amber-600 dark:text-amber-400",
-                  hard: "text-rose-600 dark:text-rose-400",
+                  easy: "text-zinc-300",
+                  medium: "text-zinc-400",
+                  hard: "text-zinc-500",
                 };
                 return (
-                  <div key={difficulty} className="flex flex-col items-center p-2 rounded-lg bg-neutral-50 dark:bg-neutral-900/50">
-                    <span className="text-[10px] uppercase font-bold tracking-tighter text-neutral-500 mb-1">{difficulty}</span>
-                    <span className={`text-lg font-bold ${colors[difficulty]}`}>
+                  <div key={difficulty} className="flex flex-col items-center">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-zinc-600 mb-1">
+                      {difficulty}
+                    </span>
+                    <span
+                      className={`font-mono text-[11px] ${colors[difficulty]}`}
+                    >
                       {counts[difficulty]}
                     </span>
                   </div>
