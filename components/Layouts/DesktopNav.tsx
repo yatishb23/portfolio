@@ -2,22 +2,21 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { LayoutGroup, motion } from "framer-motion";
-import { HiHome, HiUser, HiFolder, HiDocumentText, HiMail } from "react-icons/hi";
+import { LayoutGroup, motion, AnimatePresence } from "framer-motion";
 
 export default function DesktopNav() {
   const [hover, setHover] = useState<number | null>(null);
 
   const navItems = [
-    { label: "Home", href: "/", icon: <HiHome /> },
-    { label: "About", href: "/about", icon: <HiUser /> },
-    { label: "Projects", href: "/projects", icon: <HiFolder /> },
-    { label: "Blogs", href: "/blog", icon: <HiDocumentText /> },
-    { label: "Contact", href: "/contact", icon: <HiMail /> },
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Projects", href: "/projects" },
+    { label: "Blogs", href: "/blog" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
-    <div className="hidden sm:flex items-center gap-2">
+    <div className="hidden sm:flex items-center gap-1">
       <LayoutGroup>
         {navItems.map((item, idx) => (
           <Link
@@ -25,41 +24,36 @@ export default function DesktopNav() {
             key={idx}
             onMouseEnter={() => setHover(idx)}
             onMouseLeave={() => setHover(null)}
-            
-            className="relative flex items-center rounded-xl cursor-pointer select-none px-2"
+            className="relative flex items-center rounded-lg cursor-pointer select-none px-3 py-1.5 transition-colors duration-300"
           >
-            {/* Icon */}
+            {/* Nav Label */}
             <span
-              className={`text-2xl flex-shrink-0 p-2 rounded-xl transition-all duration-300 ${
-                hover === idx 
-                  ? "text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-800 scale-110" 
-                  : "text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300"
+              className={`relative z-10 font-mono text-sm font-medium transition-colors duration-300 ${
+                hover === idx
+                  ? "text-neutral-900 dark:text-neutral-100"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {item.icon}
+              {item.label}
             </span>
 
-            <motion.span
-              layout
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: hover === idx ? 1 : 0,
-                width: hover === idx ? "auto" : 0,
-                marginLeft: hover === idx ? 8 : 0,
-              }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="whitespace-nowrap font-black text-[10px] uppercase tracking-widest text-neutral-900 dark:text-neutral-100 overflow-hidden"
-            >
-              {item.label}
-            </motion.span>
-
-            {hover === idx && (
-              <motion.div
-                layoutId="nav-highlight"
-                className="absolute inset-0 bg-green-500/10 rounded-xl"
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              />
-            )}
+            {/* Hover Background Effect */}
+            <AnimatePresence>
+              {hover === idx && (
+                <motion.div
+                  layoutId="nav-pill"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 30,
+                  }}
+                  className="absolute inset-0 bg-neutral-100 dark:bg-white/10 rounded-lg z-0"
+                />
+              )}
+            </AnimatePresence>
           </Link>
         ))}
       </LayoutGroup>

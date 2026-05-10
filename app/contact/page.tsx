@@ -4,155 +4,237 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Mail, Linkedin, Github, Instagram } from "lucide-react";
 
-export default function Contact() {
-  const contactMethods = [
-    {
-      icon: <Mail className="w-5 h-5" />,
-      name: "Email",
-      value: "yatishbad232@gmail.com",
-      href: "mailto:yatishbad232@gmail.com",
-    },
-    {
-      icon: <Linkedin className="w-5 h-5" />,
-      name: "LinkedIn",
-      value: "linkedin.com/in/yatish-badgujar",
-      href: "https://www.linkedin.com/in/yatish-badgujar/",
-    },
-    {
-      icon: <Github className="w-5 h-5" />,
-      name: "GitHub",
-      value: "github.com/yatishb23",
-      href: "https://github.com/yatishb23",
-    },
-    {
-      icon: <Instagram className="w-5 h-5" />,
-      name: "Instagram",
-      value: "@yatishh_b23",
-      href: "https://www.instagram.com/yatishh_b23",
-    },
-  ];
+const contactMethods = [
+  {
+    icon: <Mail className="w-4 h-4" />,
+    prefix: "@",
+    name: "Email",
+    value: "yatishbad232@gmail.com",
+    href: "mailto:yatishbad232@gmail.com",
+  },
+  {
+    icon: <Linkedin className="w-4 h-4" />,
+    prefix: "in/",
+    name: "LinkedIn",
+    value: "linkedin.com/in/yatish-badgujar",
+    href: "https://www.linkedin.com/in/yatish-badgujar/",
+  },
+  {
+    icon: <Github className="w-4 h-4" />,
+    prefix: "gh/",
+    name: "GitHub",
+    value: "github.com/yatishb23",
+    href: "https://github.com/yatishb23",
+  },
+  {
+    icon: <Instagram className="w-4 h-4" />,
+    prefix: "ig/",
+    name: "Instagram",
+    value: "@yatishh_b23",
+    href: "https://www.instagram.com/yatishh_b23",
+  },
+];
 
+const SectionHeader = ({ label, num }: { label: string; num: string }) => (
+  <div className="flex items-center gap-3 mb-8">
+    <span className="text-[9px] tracking-[0.25em] uppercase text-zinc-500 border border-zinc-700 rounded-[3px] px-2 py-1 font-mono">
+      {label}
+    </span>
+    <div className="flex-1 h-px bg-zinc-800" />
+    <span className="text-[9px] text-zinc-600 tracking-widest font-mono">
+      {num}
+    </span>
+  </div>
+);
+
+const Cross = ({ pos }: { pos: string }) => (
+  <div
+    className={`absolute w-3 h-3 ${pos} -translate-x-1/2 -translate-y-1/2 pointer-events-none`}
+  >
+    <div className="absolute h-px w-full bg-zinc-700" />
+    <div className="absolute w-px h-full bg-zinc-700" />
+  </div>
+);
+
+export default function Contact() {
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-white dark:bg-neutral-950">
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="mb-20 text-center flex flex-col items-center">
+    <div className="min-h-screen bg-neutral-50 dark:bg-[#09090b]">
+      <div className="md:max-w-3xl mx-auto border-x border-neutral-200 dark:border-zinc-800 min-h-screen relative">
+        {/* ── Top banner ── */}
+        <div className="relative border-b border-zinc-800 py-5">
+          <Cross pos="top-0 left-0" />
+          <Cross pos="top-0 right-0" />
+          <div
+            className="h-[50px] w-full opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, #fff 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+            }}
+          />
+        </div>
+
+        {/* ── Back + Hero ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="px-7 py-10 border-b border-zinc-800"
+        >
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors mb-10"
+            className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.15em] uppercase text-zinc-600 hover:text-zinc-300 transition-colors mb-10 group"
           >
-            <svg className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <svg
+              className="w-3 h-3 transition-transform group-hover:-translate-x-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
             </svg>
             Back to home
           </Link>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <h1 className="text-6xl md:text-8xl font-black tracking-[-0.05em] text-neutral-950 dark:text-neutral-50 leading-none">
-              Get In Touch<span className="text-neutral-200 dark:text-neutral-800">.</span>
-            </h1>
-            <p className="max-w-xl mx-auto text-xl md:text-2xl text-neutral-500 dark:text-neutral-400 font-medium leading-relaxed">
-              I&apos;m currently looking for new opportunities. Whether you have a question or just want to say hi, I&apos;ll do my best to get back to you!
-            </p>
-          </motion.div>
-        </div>
 
-        <div className="grid lg:grid-cols-5 gap-8 items-start">
-          {/* Contact Methods */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-2 space-y-3"
-          >
-            <div className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-400 dark:text-neutral-600 px-4 mb-4">
-              Connect Directly
-            </div>
-            {contactMethods.map((method, index) => (
+          <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-zinc-600 mb-4">
+            / contact
+          </p>
+          <h1 className="font-mono text-4xl md:text-5xl font-medium tracking-[-0.04em] text-zinc-100 leading-none mb-6">
+            Get In Touch
+          </h1>
+          <p className="font-mono text-[13px] text-zinc-500 leading-[1.8] max-w-md">
+            Currently open to new opportunities. Whether you have a question or
+            just want to say hi — I'll get back to you.
+          </p>
+        </motion.div>
+
+        {/* ── Contact methods ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="px-7 py-8 border-b border-zinc-800"
+        >
+          <SectionHeader label="Connect Directly" num="01" />
+
+          <div className="flex flex-col gap-2">
+            {contactMethods.map((m, i) => (
               <Link
-                key={index}
-                href={method.href}
+                key={i}
+                href={m.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-5 p-6 rounded-[2rem] bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-100 dark:border-neutral-900 hover:bg-white dark:hover:bg-neutral-800 transition-all duration-300 shadow-sm"
+                className="group flex items-center gap-4 px-5 py-4 border border-zinc-800 rounded-[6px] hover:border-zinc-600 transition-all"
               >
-                <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950 text-neutral-950 dark:text-white group-hover:bg-neutral-950 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-neutral-950 transition-all duration-500 shadow-sm">
-                  {method.icon}
+                <div className="flex items-center justify-center w-8 h-8 border border-zinc-700 rounded-[4px] text-zinc-600 group-hover:border-zinc-500 group-hover:text-zinc-300 transition-all shrink-0">
+                  {m.icon}
                 </div>
-                <div>
-                  <h3 className="text-sm font-black text-neutral-800 dark:text-neutral-200 tracking-tight">
-                    {method.name}
-                  </h3>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-                    {method.value}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="font-mono text-[9px] text-zinc-600">
+                      {m.prefix}
+                    </span>
+                    <span className="font-mono text-[12px] text-zinc-300 font-medium">
+                      {m.name}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-600 truncate block">
+                    {m.value}
                   </span>
                 </div>
-                <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                   <svg className="w-5 h-5 text-neutral-950 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                   </svg>
-                </div>
+                <svg
+                  className="w-3.5 h-3.5 text-zinc-700 group-hover:text-zinc-400 transition-all group-hover:translate-x-0.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
               </Link>
             ))}
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-3 p-10 md:p-14 rounded-[3rem] bg-neutral-50 dark:bg-neutral-900/30 border border-neutral-100 dark:border-neutral-900 shadow-sm"
-          >
-            <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50 mb-10">
-              Send Message
-            </h2>
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 px-1">Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    className="w-full h-14 px-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 focus:border-neutral-950 dark:focus:border-white focus:ring-0 transition-all outline-none font-medium text-neutral-800 dark:text-neutral-200"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 px-1">Email Address</label>
-                  <input
-                    type="email"
-                    placeholder="john@example.com"
-                    className="w-full h-14 px-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 focus:border-neutral-950 dark:focus:border-white focus:ring-0 transition-all outline-none font-medium text-neutral-800 dark:text-neutral-200"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 px-1">Subject</label>
+        {/* ── Contact form ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="px-7 py-8 border-b border-zinc-800"
+        >
+          <SectionHeader label="Send Message" num="02" />
+
+          <form className="flex flex-col gap-5">
+            <div className="grid md:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-2">
+                <label className="font-mono text-[9px] tracking-[0.2em] uppercase text-zinc-600">
+                  Full Name
+                </label>
                 <input
                   type="text"
-                  placeholder="Inquiry about..."
-                  className="w-full h-14 px-6 rounded-2xl bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 focus:border-neutral-950 dark:focus:border-white focus:ring-0 transition-all outline-none font-medium text-neutral-800 dark:text-neutral-200"
+                  placeholder="John Doe"
+                  className="h-11 px-4 bg-transparent border border-zinc-800 rounded-[5px] font-mono text-[12px] text-zinc-300 placeholder:text-zinc-700 focus:border-zinc-600 focus:outline-none transition-colors"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 px-1">Message</label>
-                <textarea
-                  rows={6}
-                  placeholder="How can I help you?"
-                  className="w-full p-6 rounded-[2rem] bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 focus:border-neutral-950 dark:focus:border-white focus:ring-0 transition-all outline-none font-medium text-neutral-800 dark:text-neutral-200 resize-none"
+              <div className="flex flex-col gap-2">
+                <label className="font-mono text-[9px] tracking-[0.2em] uppercase text-zinc-600">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  placeholder="john@example.com"
+                  className="h-11 px-4 bg-transparent border border-zinc-800 rounded-[5px] font-mono text-[12px] text-zinc-300 placeholder:text-zinc-700 focus:border-zinc-600 focus:outline-none transition-colors"
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full h-16 rounded-[2rem] bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 font-black uppercase text-xs tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all shadow-xl"
-              >
-                Send Message
-              </button>
-            </form>
-          </motion.div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="font-mono text-[9px] tracking-[0.2em] uppercase text-zinc-600">
+                Subject
+              </label>
+              <input
+                type="text"
+                placeholder="Inquiry about..."
+                className="h-11 px-4 bg-transparent border border-zinc-800 rounded-[5px] font-mono text-[12px] text-zinc-300 placeholder:text-zinc-700 focus:border-zinc-600 focus:outline-none transition-colors"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="font-mono text-[9px] tracking-[0.2em] uppercase text-zinc-600">
+                Message
+              </label>
+              <textarea
+                rows={5}
+                placeholder="How can I help you?"
+                className="p-4 bg-transparent border border-zinc-800 rounded-[5px] font-mono text-[12px] text-zinc-300 placeholder:text-zinc-700 focus:border-zinc-600 focus:outline-none transition-colors resize-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="h-11 font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-900 bg-zinc-100 hover:bg-white rounded-[5px] transition-colors font-medium"
+            >
+              Send Message →
+            </button>
+          </form>
+        </motion.div>
+
+        {/* ── Footer ── */}
+        <div className="px-7 py-4 flex items-center justify-between">
+          <span className="font-mono text-[10px] text-zinc-700 tracking-[0.15em]">
+            YB · Contact
+          </span>
+          <span className="font-mono text-[10px] text-zinc-700">Pune, IN</span>
         </div>
       </div>
     </div>
