@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Visitors from "@/components/Visitors";
 import { Inter } from "next/font/google";
 import { SectionPanel } from "@/components/SectionPanel";
+import { Section } from "@/components/Layouts/Section";
 
 export const metadata = {
   title: "Yatish Badgujar",
@@ -40,16 +41,7 @@ export default function RootLayout({
                 <Navbar />
                 {children}
                 <div className="stripe-divider" />
-
-                <SectionPanel id="collab" title="Collab">
-                  <p className="text-[12px] text-zinc-500 mb-4">
-                    Interested in collaborating or have a project in mind? Let's
-                    connect and create something amazing together!
-                  </p>
-                  <Collab />
-                </SectionPanel>
-                <div className="stripe-divider" />
-                <SectionPanel id="footer" title="Footer">
+                <Section id="thoughts" label="Lets Connect" num="XX">
                   <p className="text-[12px] text-zinc-500 mb-4">
                     Thank you for visiting my portfolio! If you'd like to get in
                     touch, have any questions, or just want to say hi, feel free
@@ -57,7 +49,7 @@ export default function RootLayout({
                     collaborations.
                   </p>
                   <Footer />
-                </SectionPanel>
+                </Section>
               </div>
             </main>
           </TooltipProvider>

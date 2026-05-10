@@ -3,127 +3,184 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const About = () => {
-  const skills = [
-    {
-      category: "Frontend",
-      items: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
-    },
-    { category: "Backend", items: ["Node.js", "Express", "REST APIs"] },
-    { category: "Programming", items: ["Java", "Python", "JavaScript", "C++"] },
-    { category: "AI/ML", items: ["Machine Learning", "Generative AI", "NLP"] },
-    { category: "Tools", items: ["Git", "Arduino", "PLC Programming"] },
-  ];
+const skills = [
+  {
+    category: "Frontend",
+    items: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
+  },
+  { category: "Backend", items: ["Node.js", "Express", "REST APIs"] },
+  { category: "Programming", items: ["Java", "Python", "JavaScript", "C++"] },
+  { category: "AI / ML", items: ["Machine Learning", "Generative AI", "NLP"] },
+  { category: "Tools", items: ["Git", "Arduino", "PLC Programming"] },
+];
 
+const roles = [
+  { title: "Deputy Marketing Head", org: "GECA MUN Club" },
+  { title: "Organizing Team Member", org: "GMC Conference (National)" },
+  { title: "GDSC Member", org: "Google Developer Student Clubs" },
+  { title: "Workshop Organizer", org: "Cloud Study Jam & GenAI Workshop" },
+];
+
+/* ── shared layout tokens ── */
+const edge = "border-[var(--color-edge)]";
+
+const SectionHeader = ({ label, num }: { label: string; num: string }) => (
+  <div className="flex items-center gap-3 mb-8">
+    <span className="text-[9px] tracking-[0.25em] uppercase text-zinc-500 border border-zinc-700 rounded-[3px] px-2 py-1 font-mono">
+      {label}
+    </span>
+    <div className="flex-1 h-px bg-zinc-800" />
+    <span className="text-[9px] text-zinc-600 tracking-widest font-mono">
+      {num}
+    </span>
+  </div>
+);
+
+const Cross = ({ pos }: { pos: string }) => (
+  <div
+    className={`absolute w-3 h-3 ${pos} -translate-x-1/2 -translate-y-1/2 pointer-events-none`}
+  >
+    <div className="absolute h-px w-full bg-zinc-700" />
+    <div className="absolute w-px h-full bg-zinc-700" />
+  </div>
+);
+
+export default function About() {
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-geometry">
-      <div className="max-w-4xl mx-auto border-x border-geometry bg-white/50 dark:bg-neutral-950/50 min-h-screen relative z-10">
-        {/* Heading Section */}
-        <div className="px-6 sm:px-8 lg:px-12 py-20 border-b border-geometry">
+    <div className="min-h-screen bg-neutral-50 dark:bg-[#09090b]">
+      <div className="md:max-w-3xl mx-auto border-x border-neutral-200 dark:border-zinc-800 min-h-screen relative">
+        {/* ── Top banner ── */}
+        <div className="relative border-b border-zinc-800 py-5">
+          <Cross pos="top-0 left-0" />
+          <Cross pos="top-0 right-0" />
+          <div
+            className="h-[50px] w-full opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, #fff 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+            }}
+          />
+        </div>
+
+        {/* ── Back + Hero ── */}
+        <div className="relative px-7 py-10 border-b border-zinc-800">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors mb-10"
+            className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.15em] uppercase text-zinc-600 hover:text-zinc-300 transition-colors mb-10 group"
           >
-            <svg className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <svg
+              className="w-3 h-3 transition-transform group-hover:-translate-x-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
             </svg>
             Back to home
           </Link>
-          
-          <div className="space-y-8">
-            <h1 className="text-6xl md:text-8xl font-black tracking-[-0.05em] text-neutral-950 dark:text-neutral-50 leading-none">
-              About Me<span className="text-neutral-200 dark:text-neutral-800">.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-neutral-500 dark:text-neutral-400 font-medium max-w-3xl leading-relaxed">
-              I&apos;m Yatish, a final year Computer Engineering student passionate about
-              full-stack development, AI/ML, and building efficient, real-world
-              tech solutions.
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-zinc-600 mb-4">
+              / about
             </p>
-          </div>
+            <h1 className="font-mono text-4xl md:text-5xl font-medium tracking-[-0.04em] text-zinc-100 leading-none mb-6">
+              Yatish Badgujar
+            </h1>
+            <p className="font-mono text-[13px] text-zinc-500 leading-[1.8] max-w-lg">
+              Final year Computer Engineering student passionate about
+              full-stack development, AI/ML, and building efficient, real-world
+              tech solutions at the intersection of design and engineering.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid">
-          {/* Skills Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="px-6 sm:px-8 lg:px-12 py-20 border-b border-geometry"
-          >
-            <div className="space-y-12">
-              <div className="flex items-center gap-4">
-                 <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50">Technical Skills</h2>
-                 <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
-              </div>
+        {/* ── Skills ── */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="px-7 py-8 border-b border-zinc-800"
+        >
+          <SectionHeader label="Technical Skills" num="01" />
 
-              <div className="grid md:grid-cols-2 gap-12">
-                {skills.map((group, i) => (
-                  <div key={i} className="space-y-6">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400 dark:text-neutral-600 border-l-2 border-neutral-200 dark:border-neutral-800 pl-4">
-                      {group.category}
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {group.items.map((item, j) => (
-                        <span
-                          key={j}
-                          className="px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest bg-white dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 border border-neutral-100 dark:border-neutral-900 shadow-sm hover:scale-105 hover:bg-neutral-950 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all cursor-default"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.section>
-
-          {/* Roles Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="px-6 sm:px-8 lg:px-12 py-20 border-b border-geometry bg-hatch overflow-hidden"
-          >
-            <div className="grid lg:grid-cols-12 gap-12">
-              <div className="lg:col-span-4 h-fit space-y-4">
-                <h2 className="text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50">Leadership</h2>
-                <p className="text-neutral-500 dark:text-neutral-400 font-medium">Community engagement and team leadership roles.</p>
-              </div>
-
-              <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4">
-                {[
-                  { title: "Deputy Marketing Head", desc: "GECA MUN Club" },
-                  {
-                    title: "Organizing Team Member",
-                    desc: "GMC Conference (National)",
-                  },
-                  {
-                    title: "GDSC Member",
-                    desc: "Google Developer Student Clubs",
-                  },
-                  {
-                    title: "Workshop Organizer",
-                    desc: "Cloud Study Jam & GenAI Workshop",
-                  },
-                ].map((role, i) => (
-                <div key={i} className="p-8 rounded-[2rem] bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-900 shadow-sm group hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all">
-                   <div className="w-10 h-10 rounded-2xl bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                      <span className="text-xs font-black text-neutral-950 dark:text-neutral-50">{i + 1}</span>
-                   </div>
-                   <h4 className="text-lg font-black tracking-tight text-neutral-800 dark:text-neutral-200 mb-2">{role.title}</h4>
-                   <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">{role.desc}</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            {skills.map((group, i) => (
+              <div key={i}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-1 h-3 bg-zinc-700 rounded-full" />
+                  <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-zinc-600">
+                    {group.category}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </motion.section>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item, j) => (
+                    <span
+                      key={j}
+                      className="font-mono text-[10px] tracking-[0.06em] px-3 py-1.5 border border-zinc-700 rounded-[4px] text-zinc-400 hover:border-zinc-500 hover:text-zinc-200 transition-all cursor-default"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* ── Leadership ── */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="px-7 py-8 border-b border-zinc-800"
+        >
+          <SectionHeader label="Leadership" num="02" />
+
+          <div className="grid sm:grid-cols-2 gap-3">
+            {roles.map((role, i) => (
+              <div
+                key={i}
+                className="group relative p-5 border border-zinc-800 rounded-[6px] hover:border-zinc-600 transition-all"
+              >
+                {/* index */}
+                <span className="font-mono text-[9px] text-zinc-700 tracking-widest mb-4 block">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="font-mono text-[13px] text-zinc-300 font-medium leading-tight mb-1.5">
+                  {role.title}
+                </p>
+                <p className="font-mono text-[10px] tracking-[0.08em] text-zinc-600">
+                  {role.org}
+                </p>
+                {/* corner accent */}
+                <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-zinc-700 rounded-tr-[6px] opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* ── Footer strip ── */}
+        <div className="relative px-7 py-4 flex items-center justify-between">
+          <span className="font-mono text-[10px] text-zinc-700 tracking-[0.15em]">
+            YB · About
+          </span>
+          <span className="font-mono text-[10px] text-zinc-700">
+            Computer Engineering · Final Year
+          </span>
         </div>
       </div>
     </div>
   );
-};
-
-export default About;
-
+}
