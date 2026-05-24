@@ -205,7 +205,7 @@ The editor doesn’t care about the language. As long as a language server exist
     id: '2',
     title: 'OAuth & API Key Bypass Implementation',
     description: 'How to reverse-engineer Google Cloud Code\'s internal proxy flow to bypass Gemini API key requirements using first-party OAuth authentication.',
-    coverImage: '/cover.jpeg',
+    coverImage: '/outh.png',
     content: `# OAuth & API Key Bypass Implementation
 
 This document outlines the architectural flow and technical details used to authenticate users and bypass the public Gemini API key requirements within the Electron Desktop app.
