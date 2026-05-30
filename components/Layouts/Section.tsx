@@ -12,7 +12,7 @@ export const Section = ({
   >
     {/* header */}
     <div className="flex items-center gap-3 mb-5">
-      <span className="section-label">{label}</span>
+      <h2 className="section-label">{label}</h2>
       <div className="flex-1 h-px bg-zinc-800" />
       <span className="text-[9px] text-zinc-600 tracking-widest font-mono">{num}</span>
     </div>

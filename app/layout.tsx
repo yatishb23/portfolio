@@ -10,8 +10,56 @@ import { SectionPanel } from "@/components/SectionPanel";
 import { Section } from "@/components/Layouts/Section";
 
 export const metadata = {
-  title: "Yatish Badgujar",
-  description: "Product Designer & Developer",
+  metadataBase: new URL("https://yatish-badgujar.vercel.app"),
+  title: {
+    default: "Yatish Badgujar | Frontend Developer & Product Designer",
+    template: "%s | Yatish Badgujar",
+  },
+  description:
+    "Product Designer & Frontend Developer based in Pune, India. Specializing in React, Next.js, TypeScript, and building high-fidelity digital experiences.",
+  openGraph: {
+    title: "Yatish Badgujar | Frontend Developer & Product Designer",
+    description:
+      "Product Designer & Frontend Developer based in Pune, India. Specializing in React, Next.js, TypeScript, and building high-fidelity digital experiences.",
+    url: "https://yatish-badgujar.vercel.app",
+    siteName: "Yatish Badgujar",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "https://yatish-badgujar.vercel.app/share.png",
+        width: 1200,
+        height: 630,
+        alt: "Yatish Badgujar - Frontend Developer & Product Designer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yatish Badgujar | Frontend Developer & Product Designer",
+    description:
+      "Product Designer & Frontend Developer based in Pune, India.",
+    images: ["https://yatish-badgujar.vercel.app/share.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Yatish Badgujar",
+  url: "https://yatish-badgujar.vercel.app",
+  jobTitle: "Frontend Developer & Product Designer",
+  description:
+    "Product Designer & Frontend Developer based in Pune, India.",
+  sameAs: [
+    "https://github.com/yatish-badgujar",
+    "https://linkedin.com/in/yatish-badgujar",
+  ],
 };
 
 const inter = Inter({
@@ -33,6 +81,10 @@ export default function RootLayout({
         className="min-h-screen bg-neutral-50 dark:bg-[#09090b] text-neutral-800 dark:text-neutral-300 font-light selection:bg-neutral-200 dark:selection:bg-neutral-700"
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Provider>
           <TooltipProvider>
             <Visitors />

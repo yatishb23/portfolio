@@ -1,13 +1,10 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import TechSkills from "@/components/Sections/LandingPages/Skills";
 import Profiles from "@/components/Sections/Coding_Section/Profiles";
 import Experience from "@/components/Sections/LandingPages/Experience";
 import Thoughts from "@/components/Sections/LandingPages/Thoughts";
 import LeetCodeHeatmap from "@/components/Heatmap";
-import { SectionPanel } from "@/components/SectionPanel";
+import { PageAnimations, VisitorCounter } from "@/components/PageContent";
 
 /* ── Corner cross mark ── */
 const Cross = ({ pos }: { pos: string }) => (
@@ -23,22 +20,19 @@ const Section = ({
   label,
   num,
   children,
-  sectionRef,
 }: {
   id: string;
   label: string;
   num: string;
   children: React.ReactNode;
-  sectionRef?: (el: HTMLElement | null) => void;
 }) => (
   <section
     id={id}
-    ref={sectionRef}
     className="panel screen-line-before screen-line-after px-7 py-7"
   >
     {/* header */}
     <div className="flex items-center gap-3 mb-5">
-      <span className="section-label">{label}</span>
+      <h2 className="section-label">{label}</h2>
       <div className="flex-1 h-px bg-zinc-800" />
       <span className="text-[9px] text-zinc-600 tracking-widest font-mono">
         {num}
@@ -49,30 +43,6 @@ const Section = ({
 );
 
 export default function Home() {
-  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    const trackVisitor = async () => {
-      try {
-        const res = await fetch("/api/stats");
-        const data = await res.json();
-        setCount(data.uniqueVisitors);
-      } catch {}
-    };
-    trackVisitor();
-
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("animate-fade-in-up");
-        }),
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
-    );
-    sectionsRef.current.forEach((s) => s && observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
       {/* ── Top dot banner ── */}
@@ -116,7 +86,7 @@ export default function Home() {
             <div className="flex items-center gap-2 font-mono text-[10px] text-zinc-600">
               <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
               <span>
-                {count !== null ? count.toLocaleString() : "——"} visitors
+                <VisitorCounter />
               </span>
             </div>
           </div>
@@ -124,7 +94,7 @@ export default function Home() {
           {/* name + badge */}
           <div className="flex items-center gap-2.5 mb-1.5">
             <h1 className="text-[22px] font-mono font-medium tracking-[-0.04em] text-zinc-100 leading-none">
-              Yatish Badgujar
+              Yatish Badgujar | Frontend Developer
             </h1>
             {/* verified */}
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 shrink-0">
@@ -158,12 +128,7 @@ export default function Home() {
       <div className="stripe-divider" />
 
       {/* ── About ── */}
-      <Section
-        id="about"
-        label="About"
-        num="01"
-        sectionRef={(el) => (sectionsRef.current[0] = el)}
-      >
+      <Section id="about" label="About" num="01">
         <ul className="flex flex-col gap-3.5">
           {[
             "Frontend developer crafting high-fidelity digital experiences at the intersection of design and engineering.",
@@ -185,12 +150,7 @@ export default function Home() {
       <div className="stripe-divider" />
 
       {/* ── Connect ── */}
-      <Section
-        id="connect"
-        label="Connect"
-        num="02"
-        sectionRef={(el) => (sectionsRef.current[4] = el)}
-      >
+      <Section id="connect" label="Connect" num="02">
         <div className="flex flex-wrap gap-2">
           {[
             {
@@ -223,36 +183,21 @@ export default function Home() {
       <div className="stripe-divider" />
 
       {/* ── Experience ── */}
-      <Section
-        id="experience"
-        label="Experience"
-        num="03"
-        sectionRef={(el) => (sectionsRef.current[1] = el)}
-      >
+      <Section id="experience" label="Experience" num="03">
         <Experience />
       </Section>
 
       <div className="stripe-divider" />
 
       {/* ── Stack ── */}
-      <Section
-        id="stack"
-        label="Stack"
-        num="04"
-        sectionRef={(el) => (sectionsRef.current[5] = el)}
-      >
+      <Section id="stack" label="Stack" num="04">
         <TechSkills />
       </Section>
 
       <div className="stripe-divider" />
 
       {/* ── LeetCode ── */}
-      <Section
-        id="leetcode"
-        label="LeetCode"
-        num="05"
-        sectionRef={(el) => (sectionsRef.current[6] = el)}
-      >
+      <Section id="leetcode" label="LeetCode" num="05">
         <p className="text-[12px] text-zinc-600 mb-5 font-mono">
           Problem-solving journey and consistency heatmap.
         </p>
@@ -261,25 +206,15 @@ export default function Home() {
 
       <div className="stripe-divider" />
 
-      {/* ── Thoughts ── */}
-      <Section
-        id="thoughts"
-        label="Thoughts"
-        num="06"
-        sectionRef={(el) => (sectionsRef.current[3] = el)}
-      >
-        <Profiles/>
+      {/* ── Coding Profiles ── */}
+      <Section id="coding-profiles" label="Coding Profiles" num="06">
+        <Profiles />
       </Section>
 
       <div className="stripe-divider" />
 
       {/* ── Thoughts ── */}
-      <Section
-        id="thoughts"
-        label="Thoughts"
-        num="06"
-        sectionRef={(el) => (sectionsRef.current[3] = el)}
-      >
+      <Section id="thoughts" label="Thoughts" num="07">
         <Thoughts />
       </Section>
 
@@ -315,6 +250,8 @@ export default function Home() {
         </span>
         <span className="font-mono text-[10px] text-zinc-700">Pune, IN</span>
       </div>
+
+      <PageAnimations />
     </>
   );
 }
