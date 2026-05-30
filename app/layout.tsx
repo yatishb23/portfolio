@@ -17,6 +17,12 @@ export const metadata = {
   },
   description:
     "Product Designer & Frontend Developer based in Pune, India. Specializing in React, Next.js, TypeScript, and building high-fidelity digital experiences.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
+      { url: "/favicon.ico", sizes: "16x16 32x32" },
+    ],
+  },
   openGraph: {
     title: "Yatish Badgujar | Frontend Developer & Product Designer",
     description:
